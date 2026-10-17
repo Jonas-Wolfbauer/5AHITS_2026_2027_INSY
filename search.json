@@ -1,0 +1,299 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "INSY · 5AHITS",
+    "section": "",
+    "text": "Diese Seite sammelt unsere Aufgaben aus INSY. Jede Aufgabe entsteht im Team, oft mit wechselnden Partnern; wer mitgearbeitet hat, steht bei der jeweiligen Aufgabe. Ein Ziel des Fachs ist, KI-Werkzeuge richtig einzusetzen — deshalb dokumentiert jede Aufgabe auch, wofür KI verwendet wurde und was das Team selbst geprüft hat.\nDie Tabelle wird beim Bauen automatisch aus den Aufgaben erzeugt. Der Code liegt auf GitHub.\n\n\n\n\n\n\n   \n    \n    \n      Sortieren nach\n      Voreinstellung\n      \n        Datum - Datum (aufsteigend)\n      \n      \n        Datum - Neueste\n      \n      \n        Aufgabe\n      \n      \n        Partner\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nAufgabe\n\n\n\nPartner\n\n\n\nDatum\n\n\n\nThemen\n\n\n\n\n\n\n\n\nNeural Network from Scratch\n\n\nSamuel Hager, Jonas Wolfbauer\n\n\n2026-10-13\n\n\npython, csharp, neural-network\n\n\n\n\n\n\nKeine Treffer"
+  },
+  {
+    "objectID": "01-neural-network/index.html",
+    "href": "01-neural-network/index.html",
+    "title": "Neural Network from Scratch",
+    "section": "",
+    "text": "Laut Angabe 4AHITS_NN_from_scratch bauen wir ein neuronales Netz ohne ML-Bibliothek: Neuronen, Layer, Forward-Pass, Backpropagation, Training mit Gradientenabstieg sowie Export und Import der trainierten Netze. Getestet wird an zwei Problemen:\n\nXOR-Gatter — 2 Inputs, 2 Hidden-Neuronen, 1 Output\n7-Segment-Decoder — 4 Inputs (BCD-Ziffer 0–9), 16 Hidden-Neuronen, 7 Outputs (Segmente a–g)\n\nDie Umsetzung gibt es zweimal: in Python mit numpy als funktionale Version und in C# als bewusst einfache, single-threaded Version zum Nachvollziehen. Beide verwenden dieselben Dateiformate, ein in Python trainiertes Netz lässt sich also in C# laden und umgekehrt.",
+    "crumbs": [
+      "Neural Network from Scratch"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/index.html#aufgabe",
+    "href": "01-neural-network/index.html#aufgabe",
+    "title": "Neural Network from Scratch",
+    "section": "",
+    "text": "Laut Angabe 4AHITS_NN_from_scratch bauen wir ein neuronales Netz ohne ML-Bibliothek: Neuronen, Layer, Forward-Pass, Backpropagation, Training mit Gradientenabstieg sowie Export und Import der trainierten Netze. Getestet wird an zwei Problemen:\n\nXOR-Gatter — 2 Inputs, 2 Hidden-Neuronen, 1 Output\n7-Segment-Decoder — 4 Inputs (BCD-Ziffer 0–9), 16 Hidden-Neuronen, 7 Outputs (Segmente a–g)\n\nDie Umsetzung gibt es zweimal: in Python mit numpy als funktionale Version und in C# als bewusst einfache, single-threaded Version zum Nachvollziehen. Beide verwenden dieselben Dateiformate, ein in Python trainiertes Netz lässt sich also in C# laden und umgekehrt.",
+    "crumbs": [
+      "Neural Network from Scratch"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/index.html#inhalt",
+    "href": "01-neural-network/index.html#inhalt",
+    "title": "Neural Network from Scratch",
+    "section": "Inhalt",
+    "text": "Inhalt\n\n\n\nSeite\nWorum es geht\n\n\n\n\nTheorie\nForward-Pass, Kostenfunktion, Backpropagation und Gradientenabstieg — Schritt für Schritt hergeleitet\n\n\nImplementierung\nAufbau der Klassen, Entscheidungen, wichtige Codeteile, Tests\n\n\nDateiformate\nJSON, lesbares TXT und C-Header für die späteren Teile in C und auf dem ESP32\n\n\nErgebnisse\nXOR, 7-Segment-Decoder, ein lokales Minimum und die interaktive Visualisierung",
+    "crumbs": [
+      "Neural Network from Scratch"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/index.html#stand",
+    "href": "01-neural-network/index.html#stand",
+    "title": "Neural Network from Scratch",
+    "section": "Stand",
+    "text": "Stand\n\n\n\n\n\n\n\n\nTeil der Angabe\nPython\nC#\n\n\n\n\nTeil 1: Neuron, Layer, Netz, Forward, Backpropagation, Training\nfertig\nin Arbeit\n\n\nTeil 1: Export/Import JSON, TXT, C-Header\nfertig\nin Arbeit\n\n\nTeil 2: XOR und 7-Segment trainieren, exportieren, neu laden\nfertig\nin Arbeit",
+    "crumbs": [
+      "Neural Network from Scratch"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/ergebnisse.html",
+    "href": "01-neural-network/ergebnisse.html",
+    "title": "Ergebnisse",
+    "section": "",
+    "text": "Alle Zahlen stammen aus Läufen der Python-Version mit den Parametern der Angabe: Sigmoid, Lernrate \\(\\alpha = 0{,}1\\), 20 000 Epochen, Startgewichte gleichverteilt in \\([-1, 1)\\) mit festem Seed. Die Kosten sind der Mittelwert von \\(J\\) über alle Beispiele einer Epoche.",
+    "crumbs": [
+      "Ergebnisse"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/ergebnisse.html#interaktive-visualisierung",
+    "href": "01-neural-network/ergebnisse.html#interaktive-visualisierung",
+    "title": "Ergebnisse",
+    "section": "Interaktive Visualisierung",
+    "text": "Interaktive Visualisierung\nDie Visualisierung zeigt das Training Schritt für Schritt: Netzgraph mit Gewichten und Aktivierungen, Kostenverlauf, die Entscheidungsfläche beim XOR und die 7-Segment-Anzeige. Alle Werte wurden während des Trainings aus der Python-Version aufgezeichnet; die Seite rechnet selbst nichts.\nVisualisierung in eigenem Tab öffnen",
+    "crumbs": [
+      "Ergebnisse"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/ergebnisse.html#xor",
+    "href": "01-neural-network/ergebnisse.html#xor",
+    "title": "Ergebnisse",
+    "section": "XOR",
+    "text": "XOR\nNetz 2-2-1, Seed 0, Laufzeit etwa 1,4 Sekunden.\n\n\n\nEpoche\nKosten\n\n\n\n\n0\n0,1315\n\n\n2 000\n0,1253\n\n\n4 000\n0,0991\n\n\n6 000\n0,0100\n\n\n10 000\n0,0017\n\n\n20 000\n0,0005\n\n\n\nDie ersten rund 4 000 Epochen passiert wenig: Das Netz gibt für alle Inputs etwa 0,5 aus. Dann findet es die Lösung, und die Kosten fallen innerhalb von 2 000 Epochen um eine Zehnerpotenz.\n\n\n\nInput\nSoll\nAusgabe\ngerundet\n\n\n\n\n[0, 0]\n0\n0,0343\n0 ✓\n\n\n[0, 1]\n1\n0,9699\n1 ✓\n\n\n[1, 0]\n1\n0,9708\n1 ✓\n\n\n[1, 1]\n0\n0,0308\n0 ✓\n\n\n\n\nWas das Netz gelernt hat\nDie Gewichte (siehe Dateiformate) lassen sich direkt deuten:\n\n\n\n\n\n\n\n\nNeuron\ngewichtete Summe\naktiv bei\n\n\n\n\nHidden 1\n\\(5{,}90\\,x_1 - 5{,}91\\,x_2 - 3{,}36\\)\n\\(x_1 = 1\\) und \\(x_2 = 0\\)\n\n\nHidden 2\n\\(-5{,}42\\,x_1 + 5{,}14\\,x_2 - 2{,}86\\)\n\\(x_1 = 0\\) und \\(x_2 = 1\\)\n\n\nOutput\n\\(8{,}16\\,h_1 + 8{,}31\\,h_2 - 4{,}06\\)\n\\(h_1\\) oder \\(h_2\\) aktiv\n\n\n\nDas Netz hat XOR also selbst in „(\\(x_1\\) und nicht \\(x_2\\)) oder (\\(x_2\\) und nicht \\(x_1\\))“ zerlegt — genau die Form, die man auch von Hand aufschreiben würde.",
+    "crumbs": [
+      "Ergebnisse"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/ergebnisse.html#lokales-minimum",
+    "href": "01-neural-network/ergebnisse.html#lokales-minimum",
+    "title": "Ergebnisse",
+    "section": "Lokales Minimum",
+    "text": "Lokales Minimum\nOb das kleine XOR-Netz die Lösung findet, hängt von den Startgewichten ab. Mit den Seeds 0 bis 19 und sonst gleichen Parametern:\n\n\n\nErgebnis\nSeeds\nAnzahl\n\n\n\n\nalle 4 Fälle richtig, Kosten ≈ 0,0005\nalle übrigen\n16\n\n\nhängen geblieben, Kosten ≈ 0,064\n8, 12, 13\n3\n\n\nhängen geblieben, Kosten ≈ 0,085\n15\n1\n\n\n\nBei Seed 8 lernt das Netz \\([0, 0] \\to 0{,}03\\) und \\([0, 1] \\to 0{,}96\\), gibt aber für \\([1, 0]\\) und \\([1, 1]\\) beide Male etwa 0,50 aus. Eine Ausgabe von 0,5 ist für zwei Inputs mit unterschiedlichem Soll der beste Kompromiss, den dieses Netz von dort aus erreichen kann — der Gradient ist praktisch null, auch nach 20 000 Epochen. In der Visualisierung ist das als eigenes Szenario zu sehen.\n\nMehr Hidden-Neuronen, ein anderer Seed oder mehrere Läufe, von denen man den besten behält. Für die Abgabe verwenden wir Seed 0.",
+    "crumbs": [
+      "Ergebnisse"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/ergebnisse.html#segment-decoder",
+    "href": "01-neural-network/ergebnisse.html#segment-decoder",
+    "title": "Ergebnisse",
+    "section": "7-Segment-Decoder",
+    "text": "7-Segment-Decoder\nNetz 4-16-7, Seed 42, Laufzeit etwa 18 Sekunden. Alle 10 von 10 Ziffern werden richtig dekodiert.\n\n\n\nEpoche\nKosten\n\n\n\n\n0\n1,326\n\n\n2 000\n0,0129\n\n\n4 000\n0,0040\n\n\n10 000\n0,0011\n\n\n20 000\n0,0005\n\n\n\nMit 16 Hidden-Neuronen gibt es kein langes Plateau wie beim XOR; die Kosten fallen von Anfang an.\n\n\n\nZiffer\nInput\nSoll a–g\nAusgabe a–g\n\n\n\n\n0\n0000\n1111110\n0,98 1,00 0,99 0,99 0,99 0,99 0,02\n\n\n1\n0001\n0110000\n0,02 1,00 1,00 0,01 0,00 0,02 0,00\n\n\n2\n0010\n1101101\n1,00 1,00 0,02 0,99 1,00 0,01 0,98\n\n\n3\n0011\n1111001\n1,00 0,99 0,99 0,99 0,01 0,00 0,98\n\n\n4\n0100\n0110011\n0,02 0,98 1,00 0,02 0,01 1,00 0,98\n\n\n5\n0101\n1011011\n0,98 0,02 1,00 0,98 0,00 0,99 0,98\n\n\n6\n0110\n1011111\n1,00 0,02 0,99 0,99 0,99 0,99 1,00\n\n\n7\n0111\n1110000\n0,98 0,99 1,00 0,02 0,00 0,00 0,03\n\n\n8\n1000\n1111111\n1,00 1,00 1,00 1,00 0,99 1,00 1,00\n\n\n9\n1001\n1111011\n0,99 0,99 1,00 1,00 0,00 0,99 0,99\n\n\n\nJede Ausgabe liegt höchstens 0,03 vom Sollwert entfernt.",
+    "crumbs": [
+      "Ergebnisse"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/ergebnisse.html#export-und-import",
+    "href": "01-neural-network/ergebnisse.html#export-und-import",
+    "title": "Ergebnisse",
+    "section": "Export und Import",
+    "text": "Export und Import\nBeide Netze wurden als JSON, TXT und C-Header exportiert und aus JSON und TXT neu geladen. Die größte Abweichung zwischen Original und geladenem Netz über alle Inputs ist 0 — die Vorhersagen sind bitgleich.\n\nDie Ergebnisse der C#-Version und der Vergleich zwischen beiden Sprachen kommen hier dazu, sobald die C#-Umsetzung fertig ist.",
+    "crumbs": [
+      "Ergebnisse"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/dateiformate.html",
+    "href": "01-neural-network/dateiformate.html",
+    "title": "Dateiformate",
+    "section": "",
+    "text": "Ein trainiertes Netz besteht nur aus Zahlen: den Gewichten und Biases aller Neuronen. Die Angabe verlangt drei Formate dafür, jedes für einen anderen Zweck. Python und C# schreiben und lesen dieselben Dateien.\nAlle Beispiele unten sind das trainierte XOR-Netz aus den Ergebnissen.",
+    "crumbs": [
+      "Dateiformate"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/dateiformate.html#genauigkeit",
+    "href": "01-neural-network/dateiformate.html#genauigkeit",
+    "title": "Dateiformate",
+    "section": "Genauigkeit",
+    "text": "Genauigkeit\nZahlen werden so geschrieben, dass beim Einlesen exakt dieselbe Gleitkommazahl herauskommt (kürzeste eindeutige Darstellung, in Python repr). Ein neu geladenes Netz sagt deshalb bitgleich dasselbe voraus wie das Original — die Tests prüfen das mit der Differenz 0.\n\nIn C# muss beim Schreiben und Lesen CultureInfo.InvariantCulture verwendet werden. Mit deutschen Ländereinstellungen entstünde sonst 5,9005 statt 5.9005, und kein anderes Programm könnte die Datei lesen.",
+    "crumbs": [
+      "Dateiformate"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/dateiformate.html#json",
+    "href": "01-neural-network/dateiformate.html#json",
+    "title": "Dateiformate",
+    "section": "JSON",
+    "text": "JSON\nDie Struktur bildet das Netz direkt ab: eine Liste von Layern, jeder mit einer Liste von Neuronen. format und version erlauben es, falsche oder veraltete Dateien sofort zu erkennen.\n{\n  \"format\": \"insy-nn\",\n  \"version\": 1,\n  \"activation\": \"sigmoid\",\n  \"input_size\": 2,\n  \"layers\": [\n    {\n      \"neurons\": [\n        { \"weights\": [5.900521966319981, -5.914256815253622], \"bias\": -3.357581665610364 },\n        { \"weights\": [-5.421024708486351, 5.135707632445938], \"bias\": -2.859692553869736 }\n      ]\n    },\n    {\n      \"neurons\": [\n        { \"weights\": [8.158894259030141, 8.307855908650177], \"bias\": -4.0624992872092545 }\n      ]\n    }\n  ]\n}\nBeim Laden wird geprüft, ob jedes Neuron so viele Gewichte hat wie der vorherige Layer Neuronen (bzw. das Netz Inputs).",
+    "crumbs": [
+      "Dateiformate"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/dateiformate.html#txt",
+    "href": "01-neural-network/dateiformate.html#txt",
+    "title": "Dateiformate",
+    "section": "TXT",
+    "text": "TXT\nVor jedem Wert steht ein Schlüsselwort. So liest sich die Datei wie eine Auflistung, und ein C-Programm kann sie mit fscanf Wort für Wort einlesen, ohne einen JSON-Parser zu brauchen.\ninsy-nn 1\nactivation sigmoid\ninput_size 2\nlayers 2\n\nlayer 1 neurons 2 inputs 2\nneuron 1 bias -3.357581665610364 weights 5.900521966319981 -5.914256815253622\nneuron 2 bias -2.859692553869736 weights -5.421024708486351 5.135707632445938\n\nlayer 2 neurons 1 inputs 2\nneuron 1 bias -4.0624992872092545 weights 8.158894259030141 8.307855908650177",
+    "crumbs": [
+      "Dateiformate"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/dateiformate.html#c-header",
+    "href": "01-neural-network/dateiformate.html#c-header",
+    "title": "Dateiformate",
+    "section": "C-Header",
+    "text": "C-Header\nDer Header enthält Größen und alle Werte als Konstanten. Das Präfix (hier XOR) steht vor jedem Namen, damit mehrere Netze in einem Programm Platz haben. WEIGHTS[n][m] heißt: Neuron n dieses Layers, Gewicht für Input m.\n// Generated by neural_network (insy-nn v1). Do not edit.\n// Activation: sigmoid\n#ifndef XOR_NET_H\n#define XOR_NET_H\n\n#define XOR_INPUT_SIZE 2\n#define XOR_LAYER_COUNT 2\n\nstatic const int XOR_LAYER_SIZES[XOR_LAYER_COUNT] = {2, 1};\n\n// Layer 1: 2 neurons x 2 inputs\nstatic const double XOR_L1_WEIGHTS[2][2] = {\n    {5.900521966319981, -5.914256815253622},\n    {-5.421024708486351, 5.135707632445938},\n};\nstatic const double XOR_L1_BIASES[2] = {-3.357581665610364, -2.859692553869736};\n\n// Layer 2: 1 neurons x 2 inputs\nstatic const double XOR_L2_WEIGHTS[1][2] = {\n    {8.158894259030141, 8.307855908650177},\n};\nstatic const double XOR_L2_BIASES[1] = {-4.0624992872092545};\n\n#endif // XOR_NET_H\nDie Angabe wünscht im Header auch eine Funktion, die das Netz initialisiert. Sie braucht die C-Strukturen (Neuron, Layer, Network) aus Teil 4 und kommt deshalb mit Teil 4 dazu.",
+    "crumbs": [
+      "Dateiformate"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/implementierung.html",
+    "href": "01-neural-network/implementierung.html",
+    "title": "Implementierung",
+    "section": "",
+    "text": "Die Struktur folgt dem Vorschlag der Angabe: Ein Netz besteht aus Layern, ein Layer aus Neuronen. Python und C# haben dieselben Klassen und Methoden, nur jeweils in der Schreibweise der Sprache (update_weights bzw. UpdateWeights).\nclassDiagram\n    class NeuralNetwork {\n        layers : list~Layer~\n        learning_rate : float\n        predict(inputs) outputs\n        train(inputs, targets) cost\n        fit(inputs, targets, epochs) costs\n        dump_json(path)\n        load(path)\n        dump_txt(path)\n        load_txt(path)\n        dump_initfile(path, prefix)\n    }\n    class Layer {\n        neurons : list~Neuron~\n        forward(inputs) outputs\n        backward(errors, learning_rate) previous_errors\n    }\n    class Neuron {\n        weights : array\n        bias : float\n        inputs : array\n        output : float\n        activate(inputs) output\n        activate_derivative() float\n        update_weights(delta, learning_rate)\n        update_bias(delta, learning_rate)\n    }\n    NeuralNetwork \"1\" *-- \"1..*\" Layer\n    Layer \"1\" *-- \"1..*\" Neuron\n\n\n\n\n\n\n\nKlasse\nAufgabe\n\n\n\n\nNeuron\nspeichert Gewichte und Bias, berechnet \\(a = \\sigma(w \\cdot x + b)\\) und merkt sich Input und Output für die Backpropagation\n\n\nLayer\nruft alle Neuronen auf; backward berechnet die Deltas, aktualisiert die Neuronen und gibt den Fehler an den vorherigen Layer zurück\n\n\nNeuralNetwork\nverkettet die Layer, trainiert (train = ein Beispiel, fit = ganze Epochen) und speichert bzw. lädt Netze\n\n\n\nErzeugt wird ein Netz mit einer Liste von Größen, deren erster Eintrag die Anzahl der Inputs ist:\n# 2 inputs, 2 hidden neurons, 1 output; the seed makes the run reproducible\nnetwork = NeuralNetwork([2, 2, 1], learning_rate=0.1, seed=0)\nnetwork.fit(XOR_INPUTS, XOR_TARGETS, epochs=20000)\nnetwork.predict([1, 0])",
+    "crumbs": [
+      "Implementierung"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/implementierung.html#aufbau",
+    "href": "01-neural-network/implementierung.html#aufbau",
+    "title": "Implementierung",
+    "section": "",
+    "text": "Die Struktur folgt dem Vorschlag der Angabe: Ein Netz besteht aus Layern, ein Layer aus Neuronen. Python und C# haben dieselben Klassen und Methoden, nur jeweils in der Schreibweise der Sprache (update_weights bzw. UpdateWeights).\nclassDiagram\n    class NeuralNetwork {\n        layers : list~Layer~\n        learning_rate : float\n        predict(inputs) outputs\n        train(inputs, targets) cost\n        fit(inputs, targets, epochs) costs\n        dump_json(path)\n        load(path)\n        dump_txt(path)\n        load_txt(path)\n        dump_initfile(path, prefix)\n    }\n    class Layer {\n        neurons : list~Neuron~\n        forward(inputs) outputs\n        backward(errors, learning_rate) previous_errors\n    }\n    class Neuron {\n        weights : array\n        bias : float\n        inputs : array\n        output : float\n        activate(inputs) output\n        activate_derivative() float\n        update_weights(delta, learning_rate)\n        update_bias(delta, learning_rate)\n    }\n    NeuralNetwork \"1\" *-- \"1..*\" Layer\n    Layer \"1\" *-- \"1..*\" Neuron\n\n\n\n\n\n\n\nKlasse\nAufgabe\n\n\n\n\nNeuron\nspeichert Gewichte und Bias, berechnet \\(a = \\sigma(w \\cdot x + b)\\) und merkt sich Input und Output für die Backpropagation\n\n\nLayer\nruft alle Neuronen auf; backward berechnet die Deltas, aktualisiert die Neuronen und gibt den Fehler an den vorherigen Layer zurück\n\n\nNeuralNetwork\nverkettet die Layer, trainiert (train = ein Beispiel, fit = ganze Epochen) und speichert bzw. lädt Netze\n\n\n\nErzeugt wird ein Netz mit einer Liste von Größen, deren erster Eintrag die Anzahl der Inputs ist:\n# 2 inputs, 2 hidden neurons, 1 output; the seed makes the run reproducible\nnetwork = NeuralNetwork([2, 2, 1], learning_rate=0.1, seed=0)\nnetwork.fit(XOR_INPUTS, XOR_TARGETS, epochs=20000)\nnetwork.predict([1, 0])",
+    "crumbs": [
+      "Implementierung"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/implementierung.html#wichtige-codeteile",
+    "href": "01-neural-network/implementierung.html#wichtige-codeteile",
+    "title": "Implementierung",
+    "section": "Wichtige Codeteile",
+    "text": "Wichtige Codeteile\n\nNeuron: Forward und Update\ndef activate(self, inputs: FloatArray) -&gt; float:\n    self.inputs = inputs\n    z = float(np.dot(self.weights, inputs)) + self.bias\n    self.output = self._activation_fn(z)\n    return self.output\n\ndef update_weights(self, delta: float, learning_rate: float) -&gt; None:\n    # dJ/dw_i = dJ/dz * dz/dw_i = delta * x_i\n    self.weights -= learning_rate * delta * self.inputs\n\n\nLayer: Backpropagation\nDas ist die Umsetzung von Delta und Gradient für einen Layer:\ndef backward(self, errors: FloatArray, learning_rate: float) -&gt; FloatArray:\n    previous_errors = np.zeros(self.input_size)\n\n    for neuron, error in zip(self.neurons, errors, strict=True):\n        # dJ/dz = dJ/da * da/dz\n        delta = error * neuron.activate_derivative()\n\n        # dz/dx_i = w_i; must use the weights from the forward pass,\n        # so this happens before the update below\n        previous_errors += delta * neuron.weights\n\n        neuron.update_weights(delta, learning_rate)\n        neuron.update_bias(delta, learning_rate)\n\n    return previous_errors\n\n\nNetz: ein Trainingsschritt\ndef train(self, inputs: ArrayLike, targets: ArrayLike) -&gt; float:\n    expected = np.asarray(targets, dtype=np.float64)\n    outputs = self.predict(inputs)\n\n    # dJ/dy_hat for J = 1/2 * (y_hat - y)^2\n    errors = outputs - expected\n    for layer in reversed(self.layers):\n        errors = layer.backward(errors, self.learning_rate)\n\n    return 0.5 * float(np.sum((outputs - expected) ** 2))",
+    "crumbs": [
+      "Implementierung"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/implementierung.html#entscheidungen",
+    "href": "01-neural-network/implementierung.html#entscheidungen",
+    "title": "Implementierung",
+    "section": "Entscheidungen",
+    "text": "Entscheidungen\n\nDer Input ist kein Layer — so steht es in der Angabe (\\(X = A^{[0]}\\)). Ein eigener Input-Layer mit Gewichten würde aus dem 2-2-1-Netz ein Netz mit drei Gewichtsschichten machen.\nNeuron-Objekte statt Matrizen — die Struktur der Angabe ist leichter nachzuvollziehen. Eine Gewichtsmatrix pro Layer wäre deutlich schneller: Ein 7-Segment-Training über 20 000 Epochen dauert in Python rund 18 Sekunden.\nStartgewichte gleichverteilt in \\([-1, 1)\\) mit festem Seed — Neuronen starten in unterschiedliche Richtungen, und jeder Lauf ist wiederholbar.\nNumerisch stabile Sigmoid-Funktion — für negative \\(z\\) wird \\(\\frac{e^z}{1 + e^z}\\) gerechnet, damit exp nie mit einer großen positiven Zahl aufgerufen wird und überläuft.\nEine Kommandozeile für alles — python -m neural_network xor, seven-segment und visualize statt einzelner Skripte.\nC# ohne Zusatzpakete — single-threaded und mit einfachen Schleifen, damit man jeden Rechenschritt im Debugger verfolgen kann.",
+    "crumbs": [
+      "Implementierung"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/implementierung.html#fehler-im-ersten-entwurf",
+    "href": "01-neural-network/implementierung.html#fehler-im-ersten-entwurf",
+    "title": "Implementierung",
+    "section": "Fehler im ersten Entwurf",
+    "text": "Fehler im ersten Entwurf\nUnser erster C#-Entwurf hatte die richtige Struktur, aber mehrere Fehler, die das Training verhindert hätten. Sie sind in beiden Versionen behoben:\n\n\n\n\n\n\n\n\nStelle\nFehler\nRichtig\n\n\n\n\nNeuron.Activate\nSigmoid fehlte, die Ausgabe war nur \\(z\\)\n\\(a = \\sigma(z)\\)\n\n\nActivateDerivative\nSigmoid wurde ein zweites Mal angewendet\n\\(a(1-a)\\) mit der gespeicherten Ausgabe\n\n\nUpdateWeights / UpdateBias\nw += gradient * w, Lernrate unbenutzt\n\\(w \\mathrel{-}= \\alpha \\, \\delta \\, x\\) bzw. \\(b \\mathrel{-}= \\alpha \\, \\delta\\)\n\n\nNeuralNetwork\nInput-Layer mit eigenen Gewichten; der Hidden-Layer bekam die Input-Größe statt der Neuronenzahl davor\nInput ist \\(A^{[0]}\\), jeder Layer bekommt die Größe des vorherigen\n\n\nLayer\nFelder für die Größen wurden nie gesetzt\nGrößen aus den Neuronen ableiten\n\n\nStartgewichte\nnur positiv in \\([0, 1)\\)\n\\([-1, 1)\\)\n\n\nPython-Gerüst\nnp.random_uniform gibt es nicht, for i in neuronSize ohne range, Tippfehler active statt activate\nrng.uniform, range(...), activate mit Rückgabewert",
+    "crumbs": [
+      "Implementierung"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/implementierung.html#tests",
+    "href": "01-neural-network/implementierung.html#tests",
+    "title": "Implementierung",
+    "section": "Tests",
+    "text": "Tests\nDie Python-Version hat 21 automatische Tests (pytest):\n\n\n\n\n\n\n\nTest\nPrüft\n\n\n\n\nGradienten-Check\nBackpropagation gegen numerische Ableitung, drei Netzgrößen\n\n\nForward-Pass\nErgebnis gegen eine von Hand nachgerechnete Formel\n\n\nKonvergenz\nXOR lernt alle 4 Fälle, der 7-Segment-Decoder alle 10 Ziffern\n\n\nExport/Import\nJSON und TXT neu laden ergibt bitgleiche Vorhersagen; C-Header enthält jeden Wert\n\n\nFehlerfälle\nfalsche Layer-Größen, falsche Input-Länge, kaputte Dateien werden abgelehnt\n\n\nVisualisierung\ndie erzeugte Seite enthält gültige Daten für alle Szenarien",
+    "crumbs": [
+      "Implementierung"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/implementierung.html#selbst-ausprobieren",
+    "href": "01-neural-network/implementierung.html#selbst-ausprobieren",
+    "title": "Implementierung",
+    "section": "Selbst ausprobieren",
+    "text": "Selbst ausprobieren\nIm Ordner python/ des Repos:\npython -m venv .venv\n.venv\\Scripts\\python -m pip install -r requirements.txt\n.venv\\Scripts\\python -m neural_network xor\n.venv\\Scripts\\python -m neural_network seven-segment --export ..\\models\\python\n.venv\\Scripts\\python -m neural_network visualize\n.venv\\Scripts\\python -m pytest\n\nDie C#-Version ist in Arbeit. Sie bekommt dieselben Befehle (dotnet run -- xor, seven-segment, selftest) und lädt die in Python trainierten Netze.",
+    "crumbs": [
+      "Implementierung"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/theorie.html",
+    "href": "01-neural-network/theorie.html",
+    "title": "Theorie",
+    "section": "",
+    "text": "Die Angabe leitet alles für ein Netz mit genau einem Hidden-Layer her. Hier steht dieselbe Rechnung allgemein für beliebig viele Layer und Neuronen — genau so ist sie auch im Code umgesetzt.",
+    "crumbs": [
+      "Theorie"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/theorie.html#bezeichnungen",
+    "href": "01-neural-network/theorie.html#bezeichnungen",
+    "title": "Theorie",
+    "section": "Bezeichnungen",
+    "text": "Bezeichnungen\n\n\n\n\n\n\n\nSymbol\nBedeutung\n\n\n\n\n\\(A^{[0]} = X\\)\nInput des Netzes, z. B. \\([0, 1]\\) beim XOR\n\n\n\\(W^{[l]}\\), \\(b^{[l]}\\)\nGewichtsmatrix und Bias-Vektor von Layer \\(l\\); Zeile \\(j\\) von \\(W^{[l]}\\) gehört zu Neuron \\(j\\)\n\n\n\\(Z^{[l]}\\)\ngewichtete Summe von Layer \\(l\\), vor der Aktivierung\n\n\n\\(A^{[l]}\\)\nAusgabe (Aktivierung) von Layer \\(l\\)\n\n\n\\(L\\)\nNummer des letzten Layers; \\(A^{[L]} = \\hat{Y}\\) ist die Vorhersage\n\n\n\\(Y\\)\ngewünschte Ausgabe (Zielwert)\n\n\n\\(\\alpha\\)\nLernrate, bei uns 0,1\n\n\n\nDer Input ist kein eigener Layer: Er hat keine Gewichte und rechnet nichts. „Input layer: 2 neurons“ in der Angabe heißt also nur, dass das Netz zwei Eingabewerte bekommt.",
+    "crumbs": [
+      "Theorie"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/theorie.html#forward-pass",
+    "href": "01-neural-network/theorie.html#forward-pass",
+    "title": "Theorie",
+    "section": "Forward-Pass",
+    "text": "Forward-Pass\nJeder Layer rechnet zuerst eine gewichtete Summe und wendet dann die Aktivierungsfunktion an:\n\\[\nZ^{[l]} = W^{[l]} A^{[l-1]} + b^{[l]}\n\\tag{1}\\]\n\\[\nA^{[l]} = \\sigma\\left(Z^{[l]}\\right), \\qquad \\sigma(z) = \\frac{1}{1 + e^{-z}}\n\\tag{2}\\]\nFür ein einzelnes Neuron \\(j\\) ist das \\(z_j = \\sum_i w_{ji}\\, a_i + b_j\\) — ein Skalarprodukt plus Bias. Die Sigmoid-Funktion drückt jeden Wert in das Intervall \\((0, 1)\\); ohne sie wäre das ganze Netz nur eine einzige lineare Funktion und könnte XOR nicht lernen.\nflowchart LR\n    X[\"X = A⁰\"] --&gt; Z1[\"Z¹ = W¹X + b¹\"] --&gt; A1[\"A¹ = σ(Z¹)\"] --&gt; Z2[\"Z² = W²A¹ + b²\"] --&gt; A2[\"A² = Ŷ\"] --&gt; J[\"Kosten J\"]",
+    "crumbs": [
+      "Theorie"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/theorie.html#kostenfunktion",
+    "href": "01-neural-network/theorie.html#kostenfunktion",
+    "title": "Theorie",
+    "section": "Kostenfunktion",
+    "text": "Kostenfunktion\nWie weit die Vorhersage vom Ziel entfernt ist, misst die Kostenfunktion aus der Angabe (Summe der quadratischen Fehler, halbiert):\n\\[\nJ = \\frac{1}{2} \\sum_k \\left(\\hat{y}_k - y_k\\right)^2\n\\tag{3}\\]\nDer Faktor \\(\\frac{1}{2}\\) ist Bequemlichkeit: Beim Ableiten fällt er gegen die 2 aus dem Quadrat weg, es bleibt \\(\\frac{\\partial J}{\\partial \\hat{y}_k} = \\hat{y}_k - y_k\\).\nTrainiert wird mit stochastischem Gradientenabstieg (SGD): nach jedem einzelnen Beispiel ein Update. Eine Epoche ist ein Durchlauf über alle Beispiele — beim XOR also 4 Updates, beim 7-Segment-Decoder 10.",
+    "crumbs": [
+      "Theorie"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/theorie.html#backpropagation",
+    "href": "01-neural-network/theorie.html#backpropagation",
+    "title": "Theorie",
+    "section": "Backpropagation",
+    "text": "Backpropagation\nGesucht ist für jedes Gewicht, wie stark sich \\(J\\) ändert, wenn man das Gewicht ein wenig ändert: \\(\\frac{\\partial J}{\\partial W^{[l]}}\\) und \\(\\frac{\\partial J}{\\partial b^{[l]}}\\). Die Kettenregel zerlegt das in Faktoren entlang des Rechenwegs. Zentral ist dabei eine Hilfsgröße pro Neuron, das Delta:\n\\[\n\\delta^{[l]} = \\frac{\\partial J}{\\partial Z^{[l]}}\n\\]\n\nAbleitung der Sigmoid-Funktion\n\\[\n\\sigma'(z) = \\sigma(z)\\,\\bigl(1 - \\sigma(z)\\bigr) = a\\,(1 - a)\n\\tag{4}\\]\nDie Ableitung lässt sich also direkt aus der Ausgabe \\(a\\) berechnen, die das Neuron ohnehin speichert. Wichtig: \\(a\\) ist schon \\(\\sigma(z)\\) — die Sigmoid-Funktion darf hier nicht ein zweites Mal angewendet werden.\n\n\nOutput-Layer\nKettenregel aus Kosten und Aktivierung, elementweise (\\(\\odot\\)):\n\\[\n\\delta^{[L]} = \\underbrace{\\left(A^{[L]} - Y\\right)}_{\\partial J / \\partial A^{[L]}} \\odot \\underbrace{A^{[L]}\\left(1 - A^{[L]}\\right)}_{\\partial A^{[L]} / \\partial Z^{[L]}}\n\\tag{5}\\]\n\n\nHidden-Layer\nEin Hidden-Neuron beeinflusst die Kosten über alle Neuronen des nächsten Layers. Deren Deltas fließen gewichtet zurück:\n\\[\n\\delta^{[l]} = \\left( W^{[l+1]\\top} \\delta^{[l+1]} \\right) \\odot A^{[l]}\\left(1 - A^{[l]}\\right)\n\\tag{6}\\]\nDer Ausdruck in der Klammer ist der „Fehler“ \\(\\frac{\\partial J}{\\partial A^{[l]}}\\), den ein Layer an seinen Vorgänger zurückgibt — im Code der Rückgabewert von Layer.backward.\n\n\nGradienten\nWegen \\(Z^{[l]} = W^{[l]} A^{[l-1]} + b^{[l]}\\) gilt \\(\\frac{\\partial z_j}{\\partial w_{ji}} = a_i^{[l-1]}\\) und \\(\\frac{\\partial z_j}{\\partial b_j} = 1\\):\n\\[\n\\frac{\\partial J}{\\partial w^{[l]}_{ji}} = \\delta^{[l]}_j \\, a^{[l-1]}_i\n\\qquad\n\\frac{\\partial J}{\\partial b^{[l]}_j} = \\delta^{[l]}_j\n\\tag{7}\\]\nFür das Netz der Angabe mit einem Hidden-Layer (\\(L = 2\\)) ergibt das genau die Formeln aus dem PDF, zum Beispiel\n\\[\n\\frac{\\partial J}{\\partial W^{[1]}} = \\left(A^{[2]} - Y\\right) \\cdot A^{[2]}\\left(1 - A^{[2]}\\right) \\cdot W^{[2]} \\cdot A^{[1]}\\left(1 - A^{[1]}\\right) \\cdot X\n\\]\n\n\nUpdate\nJedes Gewicht macht einen kleinen Schritt gegen den Gradienten:\n\\[\nW^{[l]}_{\\text{neu}} = W^{[l]}_{\\text{alt}} - \\alpha \\, \\frac{\\partial J}{\\partial W^{[l]}}\n\\qquad\nb^{[l]}_{\\text{neu}} = b^{[l]}_{\\text{alt}} - \\alpha \\, \\frac{\\partial J}{\\partial b^{[l]}}\n\\tag{8}\\]\n\nDer Fehler für den vorherigen Layer (Gleichung 6) muss mit den Gewichten aus dem Forward-Pass berechnet werden, also bevor die Gewichte dieses Layers aktualisiert werden. Andersherum mischt man alte Aktivierungen mit neuen Gewichten, und der Gradient stimmt nicht mehr.",
+    "crumbs": [
+      "Theorie"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/theorie.html#wie-wir-die-herleitung-prüfen",
+    "href": "01-neural-network/theorie.html#wie-wir-die-herleitung-prüfen",
+    "title": "Theorie",
+    "section": "Wie wir die Herleitung prüfen",
+    "text": "Wie wir die Herleitung prüfen\nEine falsche Ableitung fällt beim Training oft gar nicht auf — das Netz lernt dann eben schlechter. Deshalb vergleicht ein Test die Backpropagation mit einer numerischen Ableitung: Jedes Gewicht wird um \\(\\varepsilon = 10^{-6}\\) nach oben und unten verschoben und die Kosten werden neu berechnet.\n\\[\n\\frac{\\partial J}{\\partial w} \\approx \\frac{J(w + \\varepsilon) - J(w - \\varepsilon)}{2 \\varepsilon}\n\\]\nFür drei verschiedene Netzgrößen (2-2-1, 4-16-7 und 3-5-4-2 mit zwei Hidden-Layern) stimmen beide Werte auf mindestens \\(10^{-8}\\) überein.",
+    "crumbs": [
+      "Theorie"
+    ]
+  },
+  {
+    "objectID": "01-neural-network/theorie.html#lokale-minima",
+    "href": "01-neural-network/theorie.html#lokale-minima",
+    "title": "Theorie",
+    "section": "Lokale Minima",
+    "text": "Lokale Minima\nGradientenabstieg findet ein Minimum in der Nähe des Startpunkts, nicht unbedingt das beste. Gerade das kleine XOR-Netz mit nur zwei Hidden-Neuronen hat Bereiche, in denen der Gradient fast null ist, obwohl das Problem nicht gelöst ist: Das Netz gibt dann für zwei der vier Inputs ungefähr 0,5 aus und kommt dort nicht mehr weg. Ob das passiert, hängt von den zufälligen Startgewichten ab — wie oft, zeigen die Ergebnisse.",
+    "crumbs": [
+      "Theorie"
+    ]
+  }
+]
