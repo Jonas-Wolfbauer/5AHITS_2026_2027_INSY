@@ -1,0 +1,24 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# .NET
+bin/
+obj/
+TestResults/
+.nuget/
+
+# Generated output and local scratch files; only <assignment>/visualization/ is
+# generated, python/neural_network/visualization/ is source code
+/*/visualization/
+.tmp/
+# Quarto build copy of the website; the source lives in the Obsidian vault
+/site/
+
+# Editors
+.vs/
+.vscode/
+.idea/

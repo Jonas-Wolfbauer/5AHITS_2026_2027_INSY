@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neural Network Training</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --series: #2a78d6;
+    --positive: #2a78d6;
+    --negative: #e34948;
+    --good: #006300;
+    --critical: #d03b3b;
+    --accent-wash: rgba(42, 120, 214, 0.10);
+    --heat: #cde2fb, #9ec5f4, #6da7ec, #3987e5, #256abf, #184f95, #0d366b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #f0efec;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --series: #3987e5;
+      --positive: #3987e5;
+      --negative: #e66767;
+      --good: #0ca30c;
+      --critical: #e66767;
+      --accent-wash: rgba(57, 135, 229, 0.16);
+      --heat: #0d366b, #184f95, #256abf, #3987e5, #6da7ec, #9ec5f4, #cde2fb;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --series: #3987e5;
+    --positive: #3987e5;
+    --negative: #e66767;
+    --good: #0ca30c;
+    --critical: #e66767;
+    --accent-wash: rgba(57, 135, 229, 0.16);
+    --heat: #0d366b, #184f95, #256abf, #3987e5, #6da7ec, #9ec5f4, #cde2fb;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; font-weight: 650; }
+  h2 { font-size: 0.95rem; margin: 0 0 12px; font-weight: 600; }
+  p { margin: 0; }
+  .lead { color: var(--ink-2); max-width: 70ch; }
+
+  .controls {
+    position: sticky; top: 0; z-index: 5;
+    margin: 20px 0 16px; padding: 12px 0;
+    background: var(--page);
+    display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+  }
+  .segmented { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+  button {
+    font: inherit; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 12px; cursor: pointer;
+  }
+  button:hover { background: var(--accent-wash); }
+  button[aria-pressed="true"] { border-color: var(--series); background: var(--accent-wash); font-weight: 600; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--series); outline-offset: 2px; }
+  .timeline { display: flex; align-items: center; gap: 10px; flex: 1 1 320px; }
+  .timeline input { flex: 1; accent-color: var(--series); }
+  .play { width: 40px; padding: 6px 0; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-bottom: 16px; }
+  .stat-label { color: var(--muted); font-size: 0.8rem; }
+  .stat-value { font-size: 1.35rem; font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; min-width: 0;
+  }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .hint { color: var(--muted); font-size: 0.8rem; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  svg text { fill: var(--ink-2); font-size: 11px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--ink-2); font-size: 0.8rem; margin-top: 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch-line { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+  .swatch-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 1px solid var(--axis); }
+
+  .heat-wrap { position: relative; width: min(100%, 380px); margin: 0 auto; aspect-ratio: 1; }
+  .heat-wrap canvas { position: absolute; left: 13.16%; top: 7.37%; width: 78.95%; height: 78.95%; border-radius: 4px; }
+  .heat-wrap svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .heat-scale { display: flex; align-items: center; gap: 8px; justify-content: center; color: var(--ink-2); font-size: 0.8rem; margin-top: 8px; }
+  .heat-bar { width: 160px; height: 10px; border-radius: 5px; }
+
+  .digits { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .digit { border: 1px solid transparent; border-radius: 10px; padding: 8px 4px 4px; background: none; text-align: center; }
+  .digit[aria-pressed="true"] { border-color: var(--series); background: var(--accent-wash); }
+  .digit svg { width: 64px; margin: 0 auto; }
+  .digit-label { font-size: 0.8rem; color: var(--ink-2); }
+  .digit-label.bad { color: var(--critical); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--axis); padding: 6px 8px; }
+  td { border-bottom: 1px solid var(--grid); padding: 6px 8px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--accent-wash); }
+  tbody tr.selected { background: var(--accent-wash); font-weight: 600; }
+  .table-scroll { overflow-x: auto; }
+  .ok { color: var(--good); }
+  .bad { color: var(--critical); }
+
+  .tooltip {
+    position: fixed; pointer-events: none; z-index: 10;
+    background: var(--surface); color: var(--ink);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 10px; font-size: 0.8rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    font-variant-numeric: tabular-nums; white-space: nowrap; display: none;
+  }
+  footer { margin-top: 24px; color: var(--muted); font-size: 0.8rem; max-width: 80ch; }
+  code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Neural Network from Scratch</h1>
+  <p class="lead">Training der Netze aus der INSY-Angabe, Schritt für Schritt. Jeder Wert auf dieser Seite stammt aus dem Python-Code (<code>neural_network</code>): Gewichte, Aktivierungen und Kosten wurden während des Trainings aufgezeichnet.</p>
+
+  <div class="controls">
+    <div class="segmented" id="scenario-buttons" role="group" aria-label="Szenario"></div>
+    <div class="timeline">
+      <button class="play" id="play" aria-label="Abspielen">▶</button>
+      <input type="range" id="epoch-slider" min="0" value="0" aria-label="Trainingsfortschritt">
+    </div>
+  </div>
+
+  <div class="stats">
+    <div><div class="stat-label">Epoche</div><div class="stat-value" id="stat-epoch">0</div></div>
+    <div><div class="stat-label">Kosten J (Mittel)</div><div class="stat-value" id="stat-cost">–</div></div>
+    <div><div class="stat-label">Richtig gerundet</div><div class="stat-value" id="stat-correct">–</div></div>
+  </div>
+  <p class="lead" id="scenario-description" style="margin-bottom:16px"></p>
+
+  <div class="grid">
+    <section class="card">
+      <div class="card-head"><h2>Netz</h2><span class="hint" id="network-hint"></span></div>
+      <svg id="network" viewBox="0 0 520 380" role="img" aria-label="Netzgraph mit Gewichten und Aktivierungen"></svg>
+      <div class="legend">
+        <span><i class="swatch-line" style="background:var(--positive)"></i>Gewicht positiv</span>
+        <span><i class="swatch-line" style="background:var(--negative)"></i>Gewicht negativ</span>
+        <span>Linienstärke = |w|</span>
+        <span><i class="swatch-dot" style="background:var(--ink)"></i>Aktivierung 1</span>
+        <span><i class="swatch-dot" style="background:var(--surface)"></i>Aktivierung 0</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Kostenverlauf</h2><span class="hint">logarithmische y-Achse</span></div>
+      <svg id="cost" viewBox="0 0 520 300" role="img" aria-label="Kosten über die Epochen"></svg>
+    </section>
+
+    <section class="card" id="xor-card">
+      <div class="card-head"><h2>Entscheidungsfläche</h2><span class="hint">Output für jeden Punkt (x₁, x₂)</span></div>
+      <div class="heat-wrap">
+        <canvas id="heat" width="25" height="25" aria-label="Output des Netzes über der Eingabefläche"></canvas>
+        <svg id="heat-overlay" viewBox="0 0 380 380"></svg>
+      </div>
+      <div class="heat-scale"><span>0</span><i class="heat-bar" id="heat-bar"></i><span>1</span><span class="hint">Grenze bei 0,5</span></div>
+    </section>
+
+    <section class="card" id="segment-card">
+      <div class="card-head"><h2>7-Segment-Anzeige</h2><span class="hint">Helligkeit = Output des Segment-Neurons</span></div>
+      <div class="digits" id="digits"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Vorhersagen</h2><span class="hint">Zeile anklicken wählt das Sample im Netz</span></div>
+      <div class="table-scroll"><table id="predictions"></table></div>
+    </section>
+  </div>
+
+  <footer id="footer"></footer>
+</main>
+<div class="tooltip" id="tooltip"></div>
+
+<script id="nn-data" type="application/json">__NN_DATA__</script>
+<script>
+"use strict";
+
+const DATA = JSON.parse(document.getElementById("nn-data").textContent);
+const SVG_NS = "http://www.w3.org/2000/svg";
+const SEGMENTS = "abcdefg";
+
+const state = { scenario: DATA.scenarios[0], snapshotIndex: 0, sample: 1, timer: null };
+
+const $ = (id) => document.getElementById(id);
+const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const fmt = (value, digits = 3) => value.toLocaleString("de-AT", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+const fmtCost = (value) => value.toLocaleString("de-AT", { maximumSignificantDigits: 4 });
+
+function svgElement(tag, attributes = {}, parent = null) {
+  const element = document.createElementNS(SVG_NS, tag);
+  for (const [key, value] of Object.entries(attributes)) {
+    element.setAttribute(key, value);
+  }
+  if (parent) {
+    parent.appendChild(element);
+  }
+  return element;
+}
+
+// ---------- tooltip ----------
+
+const tooltip = $("tooltip");
+function showTip(event, html) {
+  tooltip.innerHTML = html;
+  tooltip.style.display = "block";
+  const pad = 14;
+  const box = tooltip.getBoundingClientRect();
+  let x = event.clientX + pad;
+  let y = event.clientY + pad;
+  if (x + box.width > window.innerWidth - 8) x = event.clientX - box.width - pad;
+  if (y + box.height > window.innerHeight - 8) y = event.clientY - box.height - pad;
+  tooltip.style.left = `${x}px`;
+  tooltip.style.top = `${y}px`;
+}
+function hideTip() {
+  tooltip.style.display = "none";
+}
+document.addEventListener("mousemove", (event) => {
+  const target = event.target.closest ? event.target.closest("[data-tip]") : null;
+  if (target) {
+    showTip(event, target.dataset.tip);
+  } else if (!event.target.closest || !event.target.closest(".tip-area")) {
+    hideTip();
+  }
+});
+
+// ---------- helpers on the current state ----------
+
+const snapshot = () => state.scenario.snapshots[state.snapshotIndex];
+const outputsOf = (snap, sampleIndex) => snap.activations[sampleIndex].at(-1);
+
+function correctCount(snap) {
+  const scenario = state.scenario;
+  return scenario.targets.filter((target, i) =>
+    target.every((value, k) => Math.round(outputsOf(snap, i)[k]) === value)).length;
+}
+
+function maxWeight(scenario) {
+  if (!scenario.maxWeight) {
+    let max = 0;
+    for (const snap of scenario.snapshots) {
+      for (const layer of snap.layers) {
+        for (const row of layer.weights) {
+          for (const w of row) max = Math.max(max, Math.abs(w));
+        }
+      }
+    }
+    scenario.maxWeight = max;
+  }
+  return scenario.maxWeight;
+}
+
+// ---------- network graph ----------
+
+function drawNetwork() {
+  const svg = $("network");
+  svg.replaceChildren();
+  const scenario = state.scenario;
+  const snap = snapshot();
+  const sizes = scenario.layerSizes;
+  const width = 520, height = 380, marginX = 60, marginY = 24;
+  const maxCount = Math.max(...sizes);
+  const radius = maxCount > 8 ? 8 : 20;
+
+  const values = [scenario.inputs[state.sample], ...snap.activations[state.sample]];
+  const positions = sizes.map((count, layerIndex) => {
+    const x = marginX + layerIndex * (width - 2 * marginX) / (sizes.length - 1);
+    const spacing = Math.min((height - 2 * marginY - 20) / Math.max(count - 1, 1), 150);
+    const top = height / 2 - spacing * (count - 1) / 2;
+    return Array.from({ length: count }, (_, i) => ({ x, y: count === 1 ? height / 2 : top + i * spacing }));
+  });
+
+  const wMax = maxWeight(scenario);
+  const edges = svgElement("g", {}, svg);
+  const hits = svgElement("g", {}, svg);
+  snap.layers.forEach((layer, layerIndex) => {
+    layer.weights.forEach((row, neuron) => {
+      row.forEach((w, input) => {
+        const from = positions[layerIndex][input];
+        const to = positions[layerIndex + 1][neuron];
+        const strength = Math.min(Math.abs(w) / wMax, 1);
+        svgElement("line", {
+          x1: from.x, y1: from.y, x2: to.x, y2: to.y,
+          stroke: w >= 0 ? "var(--positive)" : "var(--negative)",
+          "stroke-width": 0.6 + 4.4 * strength,
+          "stroke-opacity": 0.25 + 0.75 * strength,
+          "stroke-linecap": "round",
+        }, edges);
+        svgElement("line", {
+          x1: from.x, y1: from.y, x2: to.x, y2: to.y,
+          stroke: "transparent", "stroke-width": 10,
+          "data-tip": `Gewicht L${layerIndex + 1}: ${nodeName(layerIndex, input)} → ${nodeName(layerIndex + 1, neuron)}<br><b>${fmt(w)}</b>`,
+        }, hits);
+      });
+    });
+  });
+
+  const nodes = svgElement("g", {}, svg);
+  positions.forEach((column, layerIndex) => {
+    column.forEach((p, i) => {
+      const a = values[layerIndex][i];
+      const isInput = layerIndex === 0;
+      const tip = isInput
+        ? `${nodeName(0, i)}<br>Wert <b>${a}</b>`
+        : `${nodeName(layerIndex, i)}<br>Aktivierung <b>${fmt(a)}</b><br>Bias ${fmt(snap.layers[layerIndex - 1].biases[i])}`;
+      svgElement("circle", {
+        cx: p.x, cy: p.y, r: radius + 4, fill: "var(--surface)",
+      }, nodes);
+      svgElement("circle", {
+        cx: p.x, cy: p.y, r: radius,
+        fill: "var(--ink)", "fill-opacity": a,
+        stroke: "var(--axis)", "stroke-width": 1.5, "data-tip": tip,
+      }, nodes);
+      if (radius >= 16) {
+        const label = svgElement("text", {
+          x: p.x, y: p.y + 4, "text-anchor": "middle",
+          style: `fill:${a > 0.5 ? "var(--surface)" : "var(--ink)"};font-size:11px;pointer-events:none`,
+        }, nodes);
+        label.textContent = isInput ? String(a) : fmt(a, 2);
+      }
+    });
+  });
+
+  const names = ["Input", ...sizes.slice(1, -1).map(() => "Hidden"), "Output"];
+  positions.forEach((column, layerIndex) => {
+    const text = svgElement("text", { x: column[0].x, y: 12, "text-anchor": "middle" }, svg);
+    text.textContent = `${names[layerIndex]} (${sizes[layerIndex]})`;
+  });
+  $("network-hint").textContent = `Sample ${sampleLabel(state.sample)}`;
+}
+
+function nodeName(layerIndex, index) {
+  const sizes = state.scenario.layerSizes;
+  if (layerIndex === 0) return `x${index + 1}`;
+  if (layerIndex === sizes.length - 1) {
+    return state.scenario.kind === "seven-segment" ? `Segment ${SEGMENTS[index]}` : "Output";
+  }
+  return `Hidden ${index + 1}`;
+}
+
+function sampleLabel(index) {
+  const scenario = state.scenario;
+  return scenario.kind === "seven-segment" ? `Ziffer ${index}` : `[${scenario.inputs[index].join(", ")}]`;
+}
+
+// ---------- cost curve ----------
+
+function drawCost() {
+  const svg = $("cost");
+  svg.replaceChildren();
+  const curve = state.scenario.costCurve;
+  const width = 520, height = 300;
+  const m = { left: 52, right: 16, top: 12, bottom: 36 };
+  const plotW = width - m.left - m.right, plotH = height - m.top - m.bottom;
+
+  const costs = curve.map((p) => p[1]);
+  const lo = Math.floor(Math.log10(Math.min(...costs)));
+  const hi = Math.ceil(Math.log10(Math.max(...costs)));
+  const maxEpoch = curve.at(-1)[0];
+  const x = (epoch) => m.left + epoch / maxEpoch * plotW;
+  const y = (cost) => m.top + (hi - Math.log10(cost)) / (hi - lo) * plotH;
+
+  for (let e = lo; e <= hi; e++) {
+    svgElement("line", { x1: m.left, x2: width - m.right, y1: y(10 ** e), y2: y(10 ** e), stroke: "var(--grid)" }, svg);
+    const label = svgElement("text", { x: m.left - 8, y: y(10 ** e) + 4, "text-anchor": "end" }, svg);
+    label.textContent = (10 ** e).toLocaleString("de-AT", { maximumSignificantDigits: 1 });
+  }
+  for (let epoch = 0; epoch <= maxEpoch; epoch += 5000) {
+    const label = svgElement("text", { x: x(epoch), y: height - m.bottom + 18, "text-anchor": "middle" }, svg);
+    label.textContent = epoch.toLocaleString("de-AT");
+  }
+  svgElement("line", { x1: m.left, x2: width - m.right, y1: height - m.bottom, y2: height - m.bottom, stroke: "var(--axis)" }, svg);
+  const axisLabel = svgElement("text", { x: m.left + plotW / 2, y: height - 4, "text-anchor": "middle" }, svg);
+  axisLabel.textContent = "Epoche";
+
+  const path = curve.map((p, i) => `${i ? "L" : "M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
+  svgElement("path", { d: path, fill: "none", stroke: "var(--series)", "stroke-width": 2, "stroke-linejoin": "round" }, svg);
+
+  const snap = snapshot();
+  svgElement("line", { x1: x(snap.epoch), x2: x(snap.epoch), y1: m.top, y2: height - m.bottom, stroke: "var(--muted)" }, svg);
+  svgElement("circle", { cx: x(snap.epoch), cy: y(snap.cost), r: 5, fill: "var(--series)", stroke: "var(--surface)", "stroke-width": 2 }, svg);
+
+  const crosshair = svgElement("line", { y1: m.top, y2: height - m.bottom, stroke: "var(--axis)", visibility: "hidden" }, svg);
+  const area = svgElement("rect", { x: m.left, y: m.top, width: plotW, height: plotH, fill: "transparent", class: "tip-area" }, svg);
+  area.addEventListener("mousemove", (event) => {
+    const box = svg.getBoundingClientRect();
+    const epoch = ((event.clientX - box.left) / box.width * width - m.left) / plotW * maxEpoch;
+    const nearest = curve.reduce((best, p) => Math.abs(p[0] - epoch) < Math.abs(best[0] - epoch) ? p : best);
+    crosshair.setAttribute("x1", x(nearest[0]));
+    crosshair.setAttribute("x2", x(nearest[0]));
+    crosshair.setAttribute("visibility", "visible");
+    showTip(event, `Epoche ${nearest[0].toLocaleString("de-AT")}<br>Kosten <b>${fmtCost(nearest[1])}</b>`);
+  });
+  area.addEventListener("mouseleave", () => {
+    crosshair.setAttribute("visibility", "hidden");
+    hideTip();
+  });
+}
+
+// ---------- XOR decision surface ----------
+
+function heatColor(value) {
+  const stops = css("--heat").split(",").map((s) => s.trim());
+  const position = Math.min(Math.max(value, 0), 1) * (stops.length - 1);
+  const i = Math.min(Math.floor(position), stops.length - 2);
+  const t = position - i;
+  const a = hexToRgb(stops[i]), b = hexToRgb(stops[i + 1]);
+  return a.map((c, k) => Math.round(c + (b[k] - c) * t));
+}
+function hexToRgb(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function drawHeat() {
+  const size = DATA.gridSize;
+  const canvas = $("heat");
+  const context = canvas.getContext("2d");
+  const image = context.createImageData(size, size);
+  const grid = snapshot().grid;
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      // Grid row 0 is x2 = 0, canvas row 0 is the top: flip vertically
+      const [r, g, b] = heatColor(grid[row * size + col]);
+      const offset = ((size - 1 - row) * size + col) * 4;
+      image.data.set([r, g, b, 255], offset);
+    }
+  }
+  context.putImageData(image, 0, 0);
+
+  const overlay = $("heat-overlay");
+  overlay.replaceChildren();
+  // Must match the canvas box in CSS: 50 / 28 / 300 of the 380 viewBox
+  const left = 50, top = 28, plot = 300, plotH = 300;
+  const px = (x1) => left + x1 * plot;
+  const py = (x2) => top + (1 - x2) * plotH;
+  for (const value of [0, 1]) {
+    const tx = svgElement("text", { x: px(value), y: top + plotH + 30, "text-anchor": "middle" }, overlay);
+    tx.textContent = value;
+    const ty = svgElement("text", { x: left - 20, y: py(value) + 4, "text-anchor": "end" }, overlay);
+    ty.textContent = value;
+  }
+  svgElement("text", { x: left + plot / 2, y: top + plotH + 30, "text-anchor": "middle" }, overlay).textContent = "x₁";
+  svgElement("text", { x: left - 20, y: top + plotH / 2 + 4, "text-anchor": "end" }, overlay).textContent = "x₂";
+
+  const area = svgElement("rect", { x: left, y: top, width: plot, height: plotH, fill: "transparent", class: "tip-area" }, overlay);
+  area.addEventListener("mousemove", (event) => {
+    const box = overlay.getBoundingClientRect();
+    const sx = (event.clientX - box.left) / box.width * 380;
+    const sy = (event.clientY - box.top) / box.height * 380;
+    const col = Math.round(Math.min(Math.max((sx - left) / plot, 0), 1) * (size - 1));
+    const row = Math.round(Math.min(Math.max(1 - (sy - top) / plotH, 0), 1) * (size - 1));
+    const value = snapshot().grid[row * size + col];
+    showTip(event, `x₁ = ${fmt(col / (size - 1), 2)}, x₂ = ${fmt(row / (size - 1), 2)}<br>Output <b>${fmt(value)}</b>`);
+  });
+  area.addEventListener("mouseleave", hideTip);
+
+  state.scenario.inputs.forEach((input, i) => {
+    const output = outputsOf(snapshot(), i)[0];
+    const target = state.scenario.targets[i][0];
+    const correct = Math.round(output) === target;
+    const selected = i === state.sample;
+    const group = svgElement("g", { style: "cursor:pointer" }, overlay);
+    svgElement("circle", {
+      cx: px(input[0]), cy: py(input[1]), r: selected ? 13 : 10,
+      fill: "var(--surface)", stroke: correct ? "var(--ink)" : "var(--critical)", "stroke-width": selected ? 3 : 2,
+      "data-tip": `[${input.join(", ")}] → Soll ${target}<br>Output <b>${fmt(output)}</b> ${correct ? "✓ richtig" : "✕ falsch"}`,
+    }, group);
+    const label = svgElement("text", { x: px(input[0]), y: py(input[1]) + 4, "text-anchor": "middle", style: "fill:var(--ink);font-weight:600;pointer-events:none" }, group);
+    label.textContent = target;
+    group.addEventListener("click", () => selectSample(i));
+  });
+}
+
+// ---------- 7-segment display ----------
+
+// Segment polygons in a 60 x 100 box, order a-g
+const SEGMENT_SHAPES = [
+  "12,6 48,6 42,12 18,12", "50,8 50,46 44,42 44,14", "50,54 50,92 44,86 44,58",
+  "12,94 48,94 42,88 18,88", "10,54 16,58 16,86 10,92", "10,8 16,14 16,42 10,46",
+  "14,50 20,46 40,46 46,50 40,54 20,54",
+];
+
+function drawDigits() {
+  const container = $("digits");
+  container.replaceChildren();
+  const snap = snapshot();
+  state.scenario.targets.forEach((target, digit) => {
+    const outputs = outputsOf(snap, digit);
+    const wrong = target.map((value, k) => Math.round(outputs[k]) !== value);
+    const button = document.createElement("button");
+    button.className = "digit";
+    button.setAttribute("aria-pressed", digit === state.sample);
+    button.setAttribute("aria-label", `Ziffer ${digit}`);
+    const svg = svgElement("svg", { viewBox: "0 0 60 100" }, button);
+    SEGMENT_SHAPES.forEach((points, k) => {
+      svgElement("polygon", {
+        points,
+        fill: "var(--ink)", "fill-opacity": 0.07 + 0.93 * outputs[k],
+        stroke: wrong[k] ? "var(--critical)" : "none", "stroke-width": wrong[k] ? 2 : 0,
+        "data-tip": `Segment ${SEGMENTS[k]}: Output <b>${fmt(outputs[k])}</b>, Soll ${target[k]}${wrong[k] ? " ✕" : ""}`,
+      }, svg);
+    });
+    const errors = wrong.filter(Boolean).length;
+    const label = document.createElement("div");
+    label.className = errors ? "digit-label bad" : "digit-label";
+    label.textContent = errors ? `${digit} · ✕ ${errors} falsch` : `${digit} · ✓`;
+    button.appendChild(label);
+    button.addEventListener("click", () => selectSample(digit));
+    container.appendChild(button);
+  });
+}
+
+// ---------- predictions table ----------
+
+function drawTable() {
+  const table = $("predictions");
+  const scenario = state.scenario;
+  const snap = snapshot();
+  const isSegment = scenario.kind === "seven-segment";
+  const head = isSegment
+    ? "<tr><th>Ziffer</th><th>Input</th><th>Soll a–g</th><th>Output a–g</th><th>Status</th></tr>"
+    : "<tr><th>Input</th><th>Soll</th><th>Output</th><th>gerundet</th><th>Status</th></tr>";
+  const rows = scenario.inputs.map((input, i) => {
+    const outputs = outputsOf(snap, i);
+    const target = scenario.targets[i];
+    const correct = target.every((value, k) => Math.round(outputs[k]) === value);
+    const status = correct ? '<span class="ok">✓ richtig</span>' : '<span class="bad">✕ falsch</span>';
+    const cells = isSegment
+      ? `<td>${i}</td><td>${input.join("")}</td><td>${target.join("")}</td><td>${outputs.map((v) => fmt(v, 2)).join(" ")}</td>`
+      : `<td>[${input.join(", ")}]</td><td>${target[0]}</td><td>${fmt(outputs[0], 4)}</td><td>${Math.round(outputs[0])}</td>`;
+    return `<tr data-index="${i}" class="${i === state.sample ? "selected" : ""}">${cells}<td>${status}</td></tr>`;
+  });
+  table.innerHTML = `<thead>${head}</thead><tbody>${rows.join("")}</tbody>`;
+  table.querySelectorAll("tbody tr").forEach((row) => {
+    row.addEventListener("click", () => selectSample(Number(row.dataset.index)));
+  });
+}
+
+// ---------- page state ----------
+
+function render() {
+  const scenario = state.scenario;
+  const snap = snapshot();
+  $("stat-epoch").textContent = snap.epoch.toLocaleString("de-AT");
+  $("stat-cost").textContent = fmtCost(snap.cost);
+  $("stat-correct").textContent = `${correctCount(snap)} / ${scenario.targets.length}`;
+  $("epoch-slider").value = state.snapshotIndex;
+  $("epoch-slider").setAttribute("aria-valuetext", `Epoche ${snap.epoch}`);
+  $("xor-card").hidden = scenario.kind !== "xor";
+  $("segment-card").hidden = scenario.kind !== "seven-segment";
+
+  drawNetwork();
+  drawCost();
+  if (scenario.kind === "xor") {
+    drawHeat();
+  } else {
+    drawDigits();
+  }
+  drawTable();
+}
+
+function selectScenario(scenario) {
+  stop();
+  state.scenario = scenario;
+  state.snapshotIndex = scenario.snapshots.length - 1;
+  state.sample = scenario.kind === "xor" ? 1 : 8;
+  $("epoch-slider").max = scenario.snapshots.length - 1;
+  $("scenario-description").textContent = scenario.description;
+  $("footer").innerHTML =
+    `Netz ${scenario.layerSizes.join("-")}, Sigmoid, Kosten J = ½·Σ(ŷ − y)², SGD mit α = ${DATA.learningRate}, ` +
+    `${DATA.epochs.toLocaleString("de-AT")} Epochen, Seed ${scenario.seed}. ` +
+    `${scenario.snapshots.length} Schnappschüsse, am Anfang dichter, weil sich das Netz dort am stärksten ändert. ` +
+    `Erzeugt mit <code>python -m neural_network visualize</code>.`;
+  document.querySelectorAll("#scenario-buttons button").forEach((button) => {
+    button.setAttribute("aria-pressed", button.dataset.id === scenario.id);
+  });
+  // Keeps the chosen scenario in the address, so reload and links keep it
+  history.replaceState(null, "", `#${scenario.id}`);
+  render();
+}
+
+function selectSample(index) {
+  state.sample = index;
+  render();
+}
+
+function stop() {
+  clearInterval(state.timer);
+  state.timer = null;
+  $("play").textContent = "▶";
+  $("play").setAttribute("aria-label", "Abspielen");
+}
+
+function play() {
+  if (state.timer) {
+    stop();
+    return;
+  }
+  const last = state.scenario.snapshots.length - 1;
+  if (state.snapshotIndex >= last) {
+    state.snapshotIndex = 0;
+  }
+  $("play").textContent = "❚❚";
+  $("play").setAttribute("aria-label", "Anhalten");
+  state.timer = setInterval(() => {
+    if (state.snapshotIndex >= last) {
+      stop();
+      return;
+    }
+    state.snapshotIndex++;
+    render();
+  }, 110);
+}
+
+for (const scenario of DATA.scenarios) {
+  const button = document.createElement("button");
+  button.textContent = scenario.title;
+  button.dataset.id = scenario.id;
+  button.addEventListener("click", () => selectScenario(scenario));
+  $("scenario-buttons").appendChild(button);
+}
+$("epoch-slider").addEventListener("input", (event) => {
+  stop();
+  state.snapshotIndex = Number(event.target.value);
+  render();
+});
+$("play").addEventListener("click", play);
+
+// Heat colors come from CSS variables, so redraw when the color scheme flips
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+$("heat-bar").style.background = `linear-gradient(90deg, ${css("--heat")})`;
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  $("heat-bar").style.background = `linear-gradient(90deg, ${css("--heat")})`;
+});
+
+const initial = DATA.scenarios.find((s) => `#${s.id}` === location.hash) ?? DATA.scenarios[0];
+selectScenario(initial);
+</script>
+</body>
+</html>
