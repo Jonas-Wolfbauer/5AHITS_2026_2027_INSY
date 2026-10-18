@@ -45,7 +45,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m neural_network",
-        description="Neural network from scratch (INSY, 5AHITS).",
+        description="Neural network from scratch (INSY).",
     )
     commands = parser.add_subparsers(required=True, metavar="command")
 

@@ -1,12 +1,12 @@
 # CLAUDE.md
 
-INSY (5AHITS, 2026/27) team repo: one folder per assignment (`NN-topic/`), each with its own `CLAUDE.md` and `README.md`.
+INSY team repo: one folder per assignment (`NN-topic/`), each with its own `CLAUDE.md` and `README.md`.
 
 ## Context
 
 - Global context and conventions: `_claude/context.md` in the main Obsidian vault (coding, python, c-family conventions).
 - School vault: `_INDEX.md`; per assignment a project note `INSY/NN-topic/_overview.md` (goal, status, decisions, progress).
-- Documentation: school vault `INSY/` (German, Obsidian Markdown), published as a Quarto website on GitHub Pages. Build: QuickAdd "INSY → GitHub Pages" on the PC (`_export/insy-site.py` in the school vault). Claude writes the pages but does not render or publish.
+- Documentation: school vault `INSY/` (German, Obsidian Markdown), published as a Quarto website on GitHub Pages. Build: QuickAdd "INSY → GitHub Pages" on the PC (`_export/insy-site.py` in the school vault). Claude writes the pages but does not render or publish. Published texts stay neutral: no "wir", no school, class or school year (the subject is fine).
 
 ## Constraints
 

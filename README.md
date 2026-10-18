@@ -1,6 +1,6 @@
-# INSY · 5AHITS 2026/27
+# INSY
 
-Assignments for INSY (Informationssysteme) at HTL Braunau, worked on in changing teams. Each assignment has its own folder with code, tests and generated models; the documentation is published as a website:
+Assignments for INSY (Informationssysteme), worked on in changing teams. Each assignment has its own folder with code, tests and generated models; the documentation is published as a website:
 
 **https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/**
 
