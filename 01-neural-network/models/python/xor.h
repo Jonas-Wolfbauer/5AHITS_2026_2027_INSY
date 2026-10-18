@@ -3,6 +3,8 @@
 #ifndef XOR_NET_H
 #define XOR_NET_H
 
+#include "neural_network.h"
+
 #define XOR_INPUT_SIZE 2
 #define XOR_LAYER_COUNT 2
 
@@ -20,5 +22,27 @@ static const double XOR_L2_WEIGHTS[1][2] = {
     {8.158894259030141, 8.307855908650177},
 };
 static const double XOR_L2_BIASES[1] = {-4.0624992872092545};
+
+// Storage for the network that XOR_Init builds; no heap memory needed
+static Neuron XOR_L1_NEURONS[2];
+static Neuron XOR_L2_NEURONS[1];
+static Layer XOR_LAYERS[XOR_LAYER_COUNT];
+
+/// Builds the network from the constants above.
+/// The weights stay in the constant arrays: never pass it to NetworkFree.
+static inline void XOR_Init (Network *network)
+{
+    for (int n = 0; n < 2; n++)
+    {
+        XOR_L1_NEURONS[n] = (Neuron){.weights = XOR_L1_WEIGHTS[n], .bias = XOR_L1_BIASES[n], .inputCount = 2};
+    }
+    XOR_LAYERS[0] = (Layer){.neurons = XOR_L1_NEURONS, .neuronCount = 2, .inputCount = 2};
+    for (int n = 0; n < 1; n++)
+    {
+        XOR_L2_NEURONS[n] = (Neuron){.weights = XOR_L2_WEIGHTS[n], .bias = XOR_L2_BIASES[n], .inputCount = 2};
+    }
+    XOR_LAYERS[1] = (Layer){.neurons = XOR_L2_NEURONS, .neuronCount = 1, .inputCount = 2};
+    *network = (Network){.layers = XOR_LAYERS, .layerCount = XOR_LAYER_COUNT, .inputSize = XOR_INPUT_SIZE};
+}
 
 #endif // XOR_NET_H

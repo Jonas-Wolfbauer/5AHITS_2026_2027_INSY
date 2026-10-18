@@ -243,6 +243,7 @@ namespace NeuralNetworkFromScratch
             Check(header.Contains("#define DEMO_INPUT_SIZE 4"), "input size missing");
             Check(header.Contains("DEMO_LAYER_SIZES[DEMO_LAYER_COUNT] = {5, 3};"), "layer sizes missing");
             Check(header.Contains("DEMO_L1_WEIGHTS[5][4]") && header.Contains("DEMO_L2_BIASES[3]"), "arrays missing");
+            Check(header.Contains("static inline void DEMO_Init (Network *network)"), "init function missing");
 
             // Every number in the arrays must parse back to the exact stored double, in file order
             int sizesIndex = header.IndexOf("DEMO_LAYER_SIZES", StringComparison.Ordinal);

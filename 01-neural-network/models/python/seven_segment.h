@@ -3,6 +3,8 @@
 #ifndef SEVEN_SEGMENT_NET_H
 #define SEVEN_SEGMENT_NET_H
 
+#include "neural_network.h"
+
 #define SEVEN_SEGMENT_INPUT_SIZE 4
 #define SEVEN_SEGMENT_LAYER_COUNT 2
 
@@ -40,5 +42,27 @@ static const double SEVEN_SEGMENT_L2_WEIGHTS[7][16] = {
     {3.6971631769949505, 1.8203661270974778, 2.193771698653132, -2.0026304599375373, -1.6285717373976405, -3.9168821488132317, 1.4404189223514243, -2.6797054314058966, 3.2115304990140547, 0.7924033592657199, -8.085033455836886, 7.815523012063439, -1.601358867431583, 0.9504060895933408, -0.28773723242835586, 2.0030957367553053},
 };
 static const double SEVEN_SEGMENT_L2_BIASES[7] = {0.13275672580686035, 0.8939795669994893, 0.5821751099935814, 0.017071880948910965, -0.006120112571185794, 0.5099192053840351, -0.113080899959539};
+
+// Storage for the network that SEVEN_SEGMENT_Init builds; no heap memory needed
+static Neuron SEVEN_SEGMENT_L1_NEURONS[16];
+static Neuron SEVEN_SEGMENT_L2_NEURONS[7];
+static Layer SEVEN_SEGMENT_LAYERS[SEVEN_SEGMENT_LAYER_COUNT];
+
+/// Builds the network from the constants above.
+/// The weights stay in the constant arrays: never pass it to NetworkFree.
+static inline void SEVEN_SEGMENT_Init (Network *network)
+{
+    for (int n = 0; n < 16; n++)
+    {
+        SEVEN_SEGMENT_L1_NEURONS[n] = (Neuron){.weights = SEVEN_SEGMENT_L1_WEIGHTS[n], .bias = SEVEN_SEGMENT_L1_BIASES[n], .inputCount = 4};
+    }
+    SEVEN_SEGMENT_LAYERS[0] = (Layer){.neurons = SEVEN_SEGMENT_L1_NEURONS, .neuronCount = 16, .inputCount = 4};
+    for (int n = 0; n < 7; n++)
+    {
+        SEVEN_SEGMENT_L2_NEURONS[n] = (Neuron){.weights = SEVEN_SEGMENT_L2_WEIGHTS[n], .bias = SEVEN_SEGMENT_L2_BIASES[n], .inputCount = 16};
+    }
+    SEVEN_SEGMENT_LAYERS[1] = (Layer){.neurons = SEVEN_SEGMENT_L2_NEURONS, .neuronCount = 7, .inputCount = 16};
+    *network = (Network){.layers = SEVEN_SEGMENT_LAYERS, .layerCount = SEVEN_SEGMENT_LAYER_COUNT, .inputSize = SEVEN_SEGMENT_INPUT_SIZE};
+}
 
 #endif // SEVEN_SEGMENT_NET_H

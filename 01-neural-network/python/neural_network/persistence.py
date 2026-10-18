@@ -214,6 +214,8 @@ def to_c_header(data: NetworkDict, prefix: str) -> str:
         f"#ifndef {guard}",
         f"#define {guard}",
         "",
+        '#include "neural_network.h"',
+        "",
         f"#define {prefix}_INPUT_SIZE {data['input_size']}",
         f"#define {prefix}_LAYER_COUNT {len(layers)}",
         "",
@@ -242,8 +244,54 @@ def to_c_header(data: NetworkDict, prefix: str) -> str:
         input_count = len(neurons)
 
     lines.append("")
+    lines.extend(_c_init_function(data, prefix))
+    lines.append("")
     lines.append(f"#endif // {guard}")
     return "\n".join(lines) + "\n"
+
+
+def _c_init_function(data: NetworkDict, prefix: str) -> list[str]:
+    # Builds the structs of c/neural_network.h around the constant arrays: no heap
+    # memory and no file, as needed on a microcontroller
+    layers = data["layers"]
+    lines = [
+        f"// Storage for the network that {prefix}_Init builds; no heap memory needed"
+    ]
+    for layer_number, layer in enumerate(layers, start=1):
+        count = len(layer["neurons"])
+        lines.append(f"static Neuron {prefix}_L{layer_number}_NEURONS[{count}];")
+    lines.append(f"static Layer {prefix}_LAYERS[{prefix}_LAYER_COUNT];")
+    lines.append("")
+    lines.append("/// Builds the network from the constants above.")
+    lines.append(
+        "/// The weights stay in the constant arrays: never pass it to NetworkFree."
+    )
+    lines.append(f"static inline void {prefix}_Init (Network *network)")
+    lines.append("{")
+
+    input_count = data["input_size"]
+    for index, layer in enumerate(layers):
+        count = len(layer["neurons"])
+        symbol = f"{prefix}_L{index + 1}"
+        lines.append(f"    for (int n = 0; n < {count}; n++)")
+        lines.append("    {")
+        lines.append(
+            f"        {symbol}_NEURONS[n] = (Neuron){{.weights = {symbol}_WEIGHTS[n], "
+            f".bias = {symbol}_BIASES[n], .inputCount = {input_count}}};"
+        )
+        lines.append("    }")
+        lines.append(
+            f"    {prefix}_LAYERS[{index}] = (Layer){{.neurons = {symbol}_NEURONS, "
+            f".neuronCount = {count}, .inputCount = {input_count}}};"
+        )
+        input_count = count
+
+    lines.append(
+        f"    *network = (Network){{.layers = {prefix}_LAYERS, "
+        f".layerCount = {prefix}_LAYER_COUNT, .inputSize = {prefix}_INPUT_SIZE}};"
+    )
+    lines.append("}")
+    return lines
 
 
 def _format_float(value: float) -> str:

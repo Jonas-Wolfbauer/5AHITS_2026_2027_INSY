@@ -255,6 +255,8 @@ namespace NeuralNetworkFromScratch
                 $"#ifndef {guard}",
                 $"#define {guard}",
                 "",
+                "#include \"neural_network.h\"",
+                "",
                 $"#define {prefix}_INPUT_SIZE {data.InputSize}",
                 $"#define {prefix}_LAYER_COUNT {layers.Count}",
                 "",
@@ -280,6 +282,8 @@ namespace NeuralNetworkFromScratch
                 inputCount = neurons.Count;
             }
 
+            lines.Add("");
+            lines.AddRange(CInitFunction(data, prefix));
             lines.Add("");
             lines.Add($"#endif // {guard}");
             return string.Join("\n", lines) + "\n";
@@ -349,6 +353,48 @@ namespace NeuralNetworkFromScratch
             // Leading zeros (0.001) shift the point, trailing zeros (100) carry no digits
             int leadingZeros = digits.Length - digits.TrimStart('0').Length;
             return (digits[leadingZeros..].TrimEnd('0'), pointPosition - leadingZeros);
+        }
+
+        // Builds the structs of c/neural_network.h around the constant arrays: no heap memory
+        // and no file, as needed on a microcontroller
+        private static List<string> CInitFunction (NetworkData data, string prefix)
+        {
+            IReadOnlyList<LayerData> layers = data.Layers;
+            var lines = new List<string> { $"// Storage for the network that {prefix}_Init builds; no heap memory needed" };
+            for (int l = 0; l < layers.Count; l++)
+            {
+                lines.Add($"static Neuron {prefix}_L{l + 1}_NEURONS[{layers[l].Neurons.Count}];");
+            }
+
+            lines.Add($"static Layer {prefix}_LAYERS[{prefix}_LAYER_COUNT];");
+            lines.Add("");
+            lines.Add("/// Builds the network from the constants above.");
+            lines.Add("/// The weights stay in the constant arrays: never pass it to NetworkFree.");
+            lines.Add($"static inline void {prefix}_Init (Network *network)");
+            lines.Add("{");
+
+            int inputCount = data.InputSize;
+            for (int l = 0; l < layers.Count; l++)
+            {
+                int count = layers[l].Neurons.Count;
+                string symbol = $"{prefix}_L{l + 1}";
+                lines.Add($"    for (int n = 0; n < {count}; n++)");
+                lines.Add("    {");
+                lines.Add(
+                    $"        {symbol}_NEURONS[n] = (Neuron){{.weights = {symbol}_WEIGHTS[n], "
+                    + $".bias = {symbol}_BIASES[n], .inputCount = {inputCount}}};");
+                lines.Add("    }");
+                lines.Add(
+                    $"    {prefix}_LAYERS[{l}] = (Layer){{.neurons = {symbol}_NEURONS, "
+                    + $".neuronCount = {count}, .inputCount = {inputCount}}};");
+                inputCount = count;
+            }
+
+            lines.Add(
+                $"    *network = (Network){{.layers = {prefix}_LAYERS, "
+                + $".layerCount = {prefix}_LAYER_COUNT, .inputSize = {prefix}_INPUT_SIZE}};");
+            lines.Add("}");
+            return lines;
         }
 
         private static JsonElement Require (JsonElement element, string name)

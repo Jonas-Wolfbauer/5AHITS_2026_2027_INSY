@@ -74,6 +74,8 @@ def test_c_header_contains_every_parameter(network):
     assert "DEMO_LAYER_SIZES[DEMO_LAYER_COUNT] = {5, 3};" in header
     assert "DEMO_L1_WEIGHTS[5][4]" in header
     assert "DEMO_L2_BIASES[3]" in header
+    assert '#include "neural_network.h"' in header
+    assert "static inline void DEMO_Init (Network *network)" in header
 
     # Every number in the arrays must parse back to the exact stored double
     body = header.split("DEMO_LAYER_SIZES", 1)[1].split("};", 1)[1]
