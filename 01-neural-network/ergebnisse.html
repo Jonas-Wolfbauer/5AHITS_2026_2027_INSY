@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ergebnisse – INSY · 5AHITS</title>
+<title>Ergebnisse – INSY</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,6 +36,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../01-neural-network/training-visualisierung.html" rel="next">
 <link href="../01-neural-network/dateiformate.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -282,7 +283,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">INSY · 5AHITS</span>
+    <span class="navbar-title">INSY</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Suchen"></div>
@@ -361,6 +362,24 @@ window.Quarto = {
  <span class="menu-text">Ergebnisse</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/training-visualisierung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualisierung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/tensorflow-vergleich.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Vergleich mit TensorFlow</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/c-inferenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inferenz in C</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -378,7 +397,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#lokales-minimum" id="toc-lokales-minimum" class="nav-link" data-scroll-target="#lokales-minimum">Lokales Minimum</a></li>
   <li><a href="#segment-decoder" id="toc-segment-decoder" class="nav-link" data-scroll-target="#segment-decoder">7-Segment-Decoder</a></li>
-  <li><a href="#export-und-import" id="toc-export-und-import" class="nav-link" data-scroll-target="#export-und-import">Export und Import</a></li>
+  <li><a href="#laufzeit" id="toc-laufzeit" class="nav-link" data-scroll-target="#laufzeit">Laufzeit</a></li>
+  <li><a href="#export-und-import" id="toc-export-und-import" class="nav-link" data-scroll-target="#export-und-import">Export und Import</a>
+  <ul class="collapse">
+  <li><a href="#austausch-zwischen-python-und-c" id="toc-austausch-zwischen-python-und-c" class="nav-link" data-scroll-target="#austausch-zwischen-python-und-c">Austausch zwischen Python und C</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Andere Formate</h2><ul><li><a href="ergebnisse.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
     </div>
@@ -406,57 +429,63 @@ window.Quarto = {
 </header>
 
 
-<p>Alle Zahlen stammen aus Läufen der Python-Version mit den Parametern der Angabe: Sigmoid, Lernrate <span class="math inline">\(\alpha = 0{,}1\)</span>, 20 000 Epochen, Startgewichte gleichverteilt in <span class="math inline">\([-1, 1)\)</span> mit festem Seed. Die Kosten sind der Mittelwert von <span class="math inline">\(J\)</span> über alle Beispiele einer Epoche.</p>
+<p>Alle Zahlen stammen aus Läufen mit den Parametern der Angabe: Sigmoid, Lernrate <span class="math inline">\(\alpha = 0{,}1\)</span>, 20 000 Epochen, Startgewichte gleichverteilt in <span class="math inline">\([-1, 1)\)</span> mit festem Seed. Die Kosten sind der Mittelwert von <span class="math inline">\(J\)</span> über alle Beispiele einer Epoche. Python und C# verwenden verschiedene Zufallsgeneratoren; derselbe Seed ergibt deshalb andere Startgewichte und einen etwas anderen Verlauf.</p>
 <section id="interaktive-visualisierung" class="level2">
 <h2 class="anchored" data-anchor-id="interaktive-visualisierung">Interaktive Visualisierung</h2>
-<p>Die Visualisierung zeigt das Training Schritt für Schritt: Netzgraph mit Gewichten und Aktivierungen, Kostenverlauf, die Entscheidungsfläche beim XOR und die 7-Segment-Anzeige. Alle Werte wurden während des Trainings aus der Python-Version aufgezeichnet; die Seite rechnet selbst nichts.</p>
-<p><a href="visualisierung/index.html" target="_blank">Visualisierung in eigenem Tab öffnen</a></p>
-<iframe src="visualisierung/index.html" title="Training visualisiert" loading="lazy" style="width:100%;height:1400px;border:0;border-radius:12px"></iframe>
+<p>Wie sich Gewichte, Aktivierungen, Kosten und die Entscheidungsfläche beim XOR während des Trainings verändern, zeigt die interaktive <a href="../01-neural-network/training-visualisierung.html">Visualisierung</a> mit allen drei Szenarien dieser Seite.</p>
 </section>
 <section id="xor" class="level2">
 <h2 class="anchored" data-anchor-id="xor">XOR</h2>
-<p>Netz 2-2-1, Seed 0, Laufzeit etwa 1,4 Sekunden.</p>
+<p>Netz 2-2-1, Seed 0 in beiden Sprachen.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: right;">Epoche</th>
-<th style="text-align: right;">Kosten</th>
+<th style="text-align: right;">Kosten Python</th>
+<th style="text-align: right;">Kosten C#</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0,1315</td>
+<td style="text-align: right;">0,1750</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2 000</td>
 <td style="text-align: right;">0,1253</td>
+<td style="text-align: right;">0,1241</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">4 000</td>
 <td style="text-align: right;">0,0991</td>
+<td style="text-align: right;">0,0862</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">6 000</td>
 <td style="text-align: right;">0,0100</td>
+<td style="text-align: right;">0,0206</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">10 000</td>
 <td style="text-align: right;">0,0017</td>
+<td style="text-align: right;">0,0020</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">20 000</td>
 <td style="text-align: right;">0,0005</td>
+<td style="text-align: right;">0,0005</td>
 </tr>
 </tbody>
 </table>
-<p>Die ersten rund 4 000 Epochen passiert wenig: Das Netz gibt für alle Inputs etwa 0,5 aus. Dann findet es die Lösung, und die Kosten fallen innerhalb von 2 000 Epochen um eine Zehnerpotenz.</p>
+<p>Die ersten rund 4 000 Epochen passiert wenig: Das Netz gibt für alle Inputs etwa 0,5 aus. Dann findet es die Lösung, und die Kosten fallen innerhalb weniger tausend Epochen um mehr als eine Zehnerpotenz.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Input</th>
 <th style="text-align: right;">Soll</th>
-<th style="text-align: right;">Ausgabe</th>
+<th style="text-align: right;">Ausgabe Python</th>
+<th style="text-align: right;">Ausgabe C#</th>
 <th style="text-align: right;">gerundet</th>
 </tr>
 </thead>
@@ -465,31 +494,35 @@ window.Quarto = {
 <td>[0, 0]</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0,0343</td>
+<td style="text-align: right;">0,0347</td>
 <td style="text-align: right;">0 ✓</td>
 </tr>
 <tr class="even">
 <td>[0, 1]</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0,9699</td>
+<td style="text-align: right;">0,9690</td>
 <td style="text-align: right;">1 ✓</td>
 </tr>
 <tr class="odd">
 <td>[1, 0]</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0,9708</td>
+<td style="text-align: right;">0,9694</td>
 <td style="text-align: right;">1 ✓</td>
 </tr>
 <tr class="even">
 <td>[1, 1]</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0,0308</td>
+<td style="text-align: right;">0,0325</td>
 <td style="text-align: right;">0 ✓</td>
 </tr>
 </tbody>
 </table>
 <section id="was-das-netz-gelernt-hat" class="level3">
 <h3 class="anchored" data-anchor-id="was-das-netz-gelernt-hat">Was das Netz gelernt hat</h3>
-<p>Die Gewichte (siehe <a href="../01-neural-network/dateiformate.html">Dateiformate</a>) lassen sich direkt deuten:</p>
+<p>Die Gewichte des Python-Netzes (siehe <a href="../01-neural-network/dateiformate.html">Dateiformate</a>) lassen sich direkt deuten:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -528,70 +561,81 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="lokales-minimum">Lokales Minimum</h2>
 <p>Ob das kleine XOR-Netz die Lösung findet, hängt von den Startgewichten ab. Mit den Seeds 0 bis 19 und sonst gleichen Parametern:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Ergebnis</th>
-<th>Seeds</th>
-<th style="text-align: right;">Anzahl</th>
+<th>Python</th>
+<th>C#</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>alle 4 Fälle richtig, Kosten ≈ 0,0005</td>
-<td>alle übrigen</td>
-<td style="text-align: right;">16</td>
+<td>16 von 20</td>
+<td>18 von 20</td>
 </tr>
 <tr class="even">
-<td>hängen geblieben, Kosten ≈ 0,064</td>
-<td>8, 12, 13</td>
-<td style="text-align: right;">3</td>
+<td>hängen geblieben, Kosten ≈ 0,064: zwei Ausgaben ≈ 0,5</td>
+<td>Seeds 8, 12, 13</td>
+<td>Seed 6</td>
 </tr>
 <tr class="odd">
-<td>hängen geblieben, Kosten ≈ 0,085</td>
-<td>15</td>
-<td style="text-align: right;">1</td>
+<td>hängen geblieben, Kosten ≈ 0,085: drei Ausgaben ≈ 0,66</td>
+<td>Seed 15</td>
+<td>Seed 1</td>
 </tr>
 </tbody>
 </table>
-<p>Bei Seed 8 lernt das Netz <span class="math inline">\([0, 0] \to 0{,}03\)</span> und <span class="math inline">\([0, 1] \to 0{,}96\)</span>, gibt aber für <span class="math inline">\([1, 0]\)</span> und <span class="math inline">\([1, 1]\)</span> beide Male etwa 0,50 aus. Eine Ausgabe von 0,5 ist für zwei Inputs mit unterschiedlichem Soll der beste Kompromiss, den dieses Netz von dort aus erreichen kann — der Gradient ist praktisch null, auch nach 20 000 Epochen. In der Visualisierung ist das als eigenes Szenario zu sehen.</p>
+<p>Bei Seed 8 lernt das Python-Netz <span class="math inline">\([0, 0] \to 0{,}03\)</span> und <span class="math inline">\([0, 1] \to 0{,}96\)</span>, gibt aber für <span class="math inline">\([1, 0]\)</span> und <span class="math inline">\([1, 1]\)</span> beide Male etwa 0,50 aus. Eine Ausgabe von 0,5 ist für zwei Inputs mit unterschiedlichem Soll der beste Kompromiss, den dieses Netz von dort aus erreichen kann — der Gradient ist praktisch null, auch nach 20 000 Epochen. Das C#-Netz mit Seed 6 bleibt genauso hängen. Bei Seed 1 (C#) ist es die zweite Variante: Nur <span class="math inline">\([0, 0]\)</span> ist richtig, die anderen drei Inputs landen alle bei etwa 0,66. In der Visualisierung ist das lokale Minimum als eigenes Szenario zu sehen.</p>
 <div class="callout-note" title="Was dagegen hilft">
-<p>Mehr Hidden-Neuronen, ein anderer Seed oder mehrere Läufe, von denen man den besten behält. Für die Abgabe verwenden wir Seed 0.</p>
+<p>Mehr Hidden-Neuronen, ein anderer Seed oder mehrere Läufe, von denen man den besten behält. Die XOR-Ergebnisse auf dieser Seite verwenden Seed 0.</p>
 </div>
 </section>
 <section id="segment-decoder" class="level2">
 <h2 class="anchored" data-anchor-id="segment-decoder">7-Segment-Decoder</h2>
-<p>Netz 4-16-7, Seed 42, Laufzeit etwa 18 Sekunden. Alle <strong>10 von 10 Ziffern</strong> werden richtig dekodiert.</p>
+<p>Netz 4-16-7, Seed 42 in beiden Sprachen. Alle <strong>10 von 10 Ziffern</strong> werden richtig dekodiert, in Python wie in C#.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: right;">Epoche</th>
-<th style="text-align: right;">Kosten</th>
+<th style="text-align: right;">Kosten Python</th>
+<th style="text-align: right;">Kosten C#</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1,326</td>
+<td style="text-align: right;">0,890</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2 000</td>
 <td style="text-align: right;">0,0129</td>
+<td style="text-align: right;">0,0143</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">4 000</td>
+<td style="text-align: right;">0,0040</td>
 <td style="text-align: right;">0,0040</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">10 000</td>
 <td style="text-align: right;">0,0011</td>
+<td style="text-align: right;">0,0011</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">20 000</td>
 <td style="text-align: right;">0,0005</td>
+<td style="text-align: right;">0,0005</td>
 </tr>
 </tbody>
 </table>
-<p>Mit 16 Hidden-Neuronen gibt es kein langes Plateau wie beim XOR; die Kosten fallen von Anfang an.</p>
+<p>Mit 16 Hidden-Neuronen gibt es kein langes Plateau wie beim XOR; die Kosten fallen von Anfang an. Die Ausgaben der Python-Version:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -664,16 +708,46 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Jede Ausgabe liegt höchstens 0,03 vom Sollwert entfernt.</p>
+<p>Jede Ausgabe liegt höchstens 0,03 vom Sollwert entfernt, in der C#-Version höchstens etwa 0,02.</p>
+</section>
+<section id="laufzeit" class="level2">
+<h2 class="anchored" data-anchor-id="laufzeit">Laufzeit</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Training über 20 000 Epochen</th>
+<th style="text-align: right;">Python</th>
+<th style="text-align: right;">C#</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>XOR 2-2-1</td>
+<td style="text-align: right;">1,4 s</td>
+<td style="text-align: right;">0,05 s</td>
+</tr>
+<tr class="even">
+<td>7-Segment 4-16-7</td>
+<td style="text-align: right;">18 s</td>
+<td style="text-align: right;">1,1 s</td>
+</tr>
+</tbody>
+</table>
+<p>Beide Versionen rechnen Neuron für Neuron. Python ruft dabei für jedes Neuron numpy auf, und bei so kleinen Vektoren kostet jeder Aufruf mehr als die eigentliche Rechnung; C# übersetzt die Schleifen direkt in Maschinencode. Gemessen auf demselben PC, C# als Debug-Build, wie ihn <code>dotnet run</code> erzeugt.</p>
 </section>
 <section id="export-und-import" class="level2">
 <h2 class="anchored" data-anchor-id="export-und-import">Export und Import</h2>
-<p>Beide Netze wurden als JSON, TXT und C-Header exportiert und aus JSON und TXT neu geladen. Die größte Abweichung zwischen Original und geladenem Netz über alle Inputs ist <strong>0</strong> — die Vorhersagen sind bitgleich.</p>
-<div class="callout-note" title="C#">
-<p>Die Ergebnisse der C#-Version und der Vergleich zwischen beiden Sprachen kommen hier dazu, sobald die C#-Umsetzung fertig ist.</p>
-</div>
+<p>Beide Netze wurden in beiden Sprachen als JSON, TXT und C-Header exportiert und aus JSON und TXT neu geladen. Die größte Abweichung zwischen Original und geladenem Netz über alle Inputs ist <strong>0</strong> — die Vorhersagen sind bitgleich.</p>
+<section id="austausch-zwischen-python-und-c" class="level3">
+<h3 class="anchored" data-anchor-id="austausch-zwischen-python-und-c">Austausch zwischen Python und C</h3>
+<ul>
+<li>C# lädt die in Python trainierten Netze (<code>dotnet run -- load ..\models\python\xor.json</code>) und gibt dieselben Ausgaben aus wie Python, beim XOR also 0,0343 / 0,9699 / 0,9708 / 0,0308. Der 7-Segment-Decoder aus Python erkennt auch in C# alle 10 Ziffern.</li>
+<li>Python lädt die in C# trainierten Netze genauso.</li>
+<li>Schreibt eine Sprache ein Netz der anderen neu, entsteht Byte für Byte dieselbe Datei — bei JSON, TXT und C-Header. Beide Testsammlungen prüfen das an den gespeicherten Modellen.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1097,6 +1171,9 @@ window.Quarto = {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../01-neural-network/training-visualisierung.html" class="pagination-link" aria-label="Visualisierung">
+        <span class="nav-page-text">Visualisierung</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

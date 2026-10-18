@@ -9,7 +9,7 @@
 <meta name="author" content="Samuel Hager">
 <meta name="author" content="Jonas Wolfbauer">
 
-<title>Neural Network from Scratch – INSY · 5AHITS</title>
+<title>Neural Network from Scratch – INSY</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -255,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">INSY · 5AHITS</span>
+    <span class="navbar-title">INSY</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Suchen"></div>
@@ -334,6 +334,24 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Ergebnisse</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/training-visualisierung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualisierung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/tensorflow-vergleich.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Vergleich mit TensorFlow</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/c-inferenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inferenz in C</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -357,10 +375,12 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Neural Network from Scratch</h1>
-<p class="subtitle lead">Feedforward-Netz mit Backpropagation in Python und C#</p>
+<p class="subtitle lead">Feedforward-Netz mit Backpropagation in Python, C# und C</p>
   <div class="quarto-categories">
     <div class="quarto-category">python</div>
     <div class="quarto-category">csharp</div>
+    <div class="quarto-category">c</div>
+    <div class="quarto-category">tensorflow</div>
     <div class="quarto-category">neural-network</div>
   </div>
   </div>
@@ -394,12 +414,12 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="aufgabe" class="level2">
 <h2 class="anchored" data-anchor-id="aufgabe">Aufgabe</h2>
-<p>Laut Angabe <em>4AHITS_NN_from_scratch</em> bauen wir ein neuronales Netz ohne ML-Bibliothek: Neuronen, Layer, Forward-Pass, Backpropagation, Training mit Gradientenabstieg sowie Export und Import der trainierten Netze. Getestet wird an zwei Problemen:</p>
+<p>Ziel der Aufgabe ist ein neuronales Netz ohne ML-Bibliothek: Neuronen, Layer, Forward-Pass, Backpropagation, Training mit Gradientenabstieg sowie Export und Import der trainierten Netze. Getestet wird an zwei Problemen:</p>
 <ul>
 <li><strong>XOR-Gatter</strong> — 2 Inputs, 2 Hidden-Neuronen, 1 Output</li>
 <li><strong>7-Segment-Decoder</strong> — 4 Inputs (BCD-Ziffer 0–9), 16 Hidden-Neuronen, 7 Outputs (Segmente a–g)</li>
 </ul>
-<p>Die Umsetzung gibt es zweimal: in <strong>Python</strong> mit numpy als funktionale Version und in <strong>C#</strong> als bewusst einfache, single-threaded Version zum Nachvollziehen. Beide verwenden dieselben Dateiformate, ein in Python trainiertes Netz lässt sich also in C# laden und umgekehrt.</p>
+<p>Die Umsetzung gibt es zweimal: in <strong>Python</strong> mit numpy als funktionale Version und in <strong>C#</strong> als bewusst einfache, single-threaded Version zum Nachvollziehen. Beide verwenden dieselben Dateiformate, ein in Python trainiertes Netz lässt sich also in C# laden und umgekehrt. Dazu kommen ein Vergleich mit <strong>TensorFlow</strong> und eine <strong>C-Version</strong>, die trainierte Netze nur noch ausführt.</p>
 </section>
 <section id="inhalt" class="level2">
 <h2 class="anchored" data-anchor-id="inhalt">Inhalt</h2>
@@ -417,15 +437,27 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><a href="../01-neural-network/implementierung.html">Implementierung</a></td>
-<td>Aufbau der Klassen, Entscheidungen, wichtige Codeteile, Tests</td>
+<td>Aufbau der Klassen in Python und C#, Entscheidungen, wichtige Codeteile, Tests</td>
 </tr>
 <tr class="odd">
 <td><a href="../01-neural-network/dateiformate.html">Dateiformate</a></td>
-<td>JSON, lesbares TXT und C-Header für die späteren Teile in C und auf dem ESP32</td>
+<td>JSON, lesbares TXT und C-Header mit Init-Funktion</td>
 </tr>
 <tr class="even">
 <td><a href="../01-neural-network/ergebnisse.html">Ergebnisse</a></td>
-<td>XOR, 7-Segment-Decoder, ein lokales Minimum und die interaktive Visualisierung</td>
+<td>XOR, 7-Segment-Decoder, ein lokales Minimum, Laufzeit und Austausch zwischen den Sprachen</td>
+</tr>
+<tr class="odd">
+<td><a href="../01-neural-network/training-visualisierung.html">Visualisierung</a></td>
+<td>das Training interaktiv: Bedienung, was die Bereiche zeigen, wie die Seite entsteht</td>
+</tr>
+<tr class="even">
+<td><a href="../01-neural-network/tensorflow-vergleich.html">Vergleich mit TensorFlow</a></td>
+<td>Teil 3: dieselben Netze mit TensorFlow — Genauigkeit, Konvergenz, Geschwindigkeit</td>
+</tr>
+<tr class="odd">
+<td><a href="../01-neural-network/c-inferenz.html">Inferenz in C</a></td>
+<td>Teil 4 und 5: Vorhersage in C, Gewichte aus der TXT-Datei bzw. aus dem Header</td>
 </tr>
 </tbody>
 </table>
@@ -441,25 +473,40 @@ ul.task-list li input[type="checkbox"] {
 <thead>
 <tr class="header">
 <th>Teil der Angabe</th>
-<th>Python</th>
-<th>C#</th>
+<th>Umsetzung</th>
+<th>Stand</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Teil 1: Neuron, Layer, Netz, Forward, Backpropagation, Training</td>
+<td>Teil 1: Neuron, Layer, Netz, Forward, Backpropagation, Training, Export/Import</td>
+<td>Python, C#</td>
 <td>fertig</td>
-<td>in Arbeit</td>
 </tr>
 <tr class="even">
-<td>Teil 1: Export/Import JSON, TXT, C-Header</td>
+<td>Teil 2: XOR und 7-Segment trainieren, exportieren, neu laden</td>
+<td>Python, C#</td>
 <td>fertig</td>
-<td>in Arbeit</td>
 </tr>
 <tr class="odd">
-<td>Teil 2: XOR und 7-Segment trainieren, exportieren, neu laden</td>
+<td>Teil 3: Vergleich mit TensorFlow</td>
+<td>Python mit TensorFlow 2.21</td>
 <td>fertig</td>
-<td>in Arbeit</td>
+</tr>
+<tr class="even">
+<td>Teil 4: Forward-Inferenz in C, Gewichte aus der TXT-Datei</td>
+<td>C</td>
+<td>fertig</td>
+</tr>
+<tr class="odd">
+<td>Teil 5: Forward-Inferenz in C, Initialisierung aus dem Header</td>
+<td>C</td>
+<td>fertig</td>
+</tr>
+<tr class="even">
+<td>Teil 6: 7-Segment-Decoder auf einem ESP32</td>
+<td>—</td>
+<td>nicht umgesetzt</td>
 </tr>
 </tbody>
 </table>

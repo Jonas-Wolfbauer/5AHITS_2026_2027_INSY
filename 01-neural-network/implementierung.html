@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Implementierung – INSY · 5AHITS</title>
+<title>Implementierung – INSY</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -318,7 +318,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">INSY · 5AHITS</span>
+    <span class="navbar-title">INSY</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Suchen"></div>
@@ -397,6 +397,24 @@ window.Quarto = {
  <span class="menu-text">Ergebnisse</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/training-visualisierung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualisierung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/tensorflow-vergleich.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Vergleich mit TensorFlow</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/c-inferenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inferenz in C</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -407,7 +425,10 @@ window.Quarto = {
     <h2 id="toc-title">Inhalt</h2>
    
   <ul>
-  <li><a href="#aufbau" id="toc-aufbau" class="nav-link active" data-scroll-target="#aufbau">Aufbau</a></li>
+  <li><a href="#aufbau" id="toc-aufbau" class="nav-link active" data-scroll-target="#aufbau">Aufbau</a>
+  <ul class="collapse">
+  <li><a href="#dateien" id="toc-dateien" class="nav-link" data-scroll-target="#dateien">Dateien</a></li>
+  </ul></li>
   <li><a href="#wichtige-codeteile" id="toc-wichtige-codeteile" class="nav-link" data-scroll-target="#wichtige-codeteile">Wichtige Codeteile</a>
   <ul class="collapse">
   <li><a href="#neuron-forward-und-update" id="toc-neuron-forward-und-update" class="nav-link" data-scroll-target="#neuron-forward-und-update">Neuron: Forward und Update</a></li>
@@ -509,52 +530,146 @@ window.Quarto = {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>network <span class="op">=</span> NeuralNetwork([<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>], learning_rate<span class="op">=</span><span class="fl">0.1</span>, seed<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>network.fit(XOR_INPUTS, XOR_TARGETS, epochs<span class="op">=</span><span class="dv">20000</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>network.predict([<span class="dv">1</span>, <span class="dv">0</span>])</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In C# sieht derselbe Ablauf so aus:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 2 inputs, 2 hidden neurons, 1 output; the seed makes the run reproducible</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">var</span> network <span class="op">=</span> <span class="kw">new</span> <span class="fu">NeuralNetwork</span><span class="op">([</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">],</span> learningRate<span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> seed<span class="op">:</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>network<span class="op">.</span><span class="fu">Fit</span><span class="op">(</span>Datasets<span class="op">.</span><span class="fu">XorInputs</span><span class="op">,</span> Datasets<span class="op">.</span><span class="fu">XorTargets</span><span class="op">,</span> epochs<span class="op">:</span> <span class="dv">20000</span><span class="op">);</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>network<span class="op">.</span><span class="fu">Predict</span><span class="op">([</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">]);</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="dateien" class="level3">
+<h3 class="anchored" data-anchor-id="dateien">Dateien</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aufgabe</th>
+<th>Python (<code>python/neural_network/</code>)</th>
+<th>C# (<code>csharp/</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aktivierungsfunktion</td>
+<td><code>activation.py</code></td>
+<td><code>Activations.cs</code></td>
+</tr>
+<tr class="even">
+<td>Neuron</td>
+<td><code>neuron.py</code></td>
+<td><code>Neuron.cs</code>, Skalarprodukt in <code>NeuralNetworkMath.cs</code></td>
+</tr>
+<tr class="odd">
+<td>Layer</td>
+<td><code>layer.py</code></td>
+<td><code>Layer.cs</code></td>
+</tr>
+<tr class="even">
+<td>Netz</td>
+<td><code>network.py</code></td>
+<td><code>NeuralNetwork.cs</code></td>
+</tr>
+<tr class="odd">
+<td>Dateiformate</td>
+<td><code>persistence.py</code></td>
+<td><code>NetworkSerializer.cs</code>, <code>NetworkData.cs</code></td>
+</tr>
+<tr class="even">
+<td>Trainingsdaten</td>
+<td><code>datasets.py</code></td>
+<td><code>Datasets.cs</code></td>
+</tr>
+<tr class="odd">
+<td>Kommandozeile</td>
+<td><code>__main__.py</code></td>
+<td><code>Program.cs</code></td>
+</tr>
+<tr class="even">
+<td>Tests</td>
+<td><code>tests/</code> mit pytest</td>
+<td><code>SelfTest.cs</code></td>
+</tr>
+<tr class="odd">
+<td>Visualisierung</td>
+<td><code>visualization/</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="wichtige-codeteile" class="level2">
 <h2 class="anchored" data-anchor-id="wichtige-codeteile">Wichtige Codeteile</h2>
 <section id="neuron-forward-und-update" class="level3">
 <h3 class="anchored" data-anchor-id="neuron-forward-und-update">Neuron: Forward und Update</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> activate(<span class="va">self</span>, inputs: FloatArray) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.inputs <span class="op">=</span> inputs</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> <span class="bu">float</span>(np.dot(<span class="va">self</span>.weights, inputs)) <span class="op">+</span> <span class="va">self</span>.bias</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.output <span class="op">=</span> <span class="va">self</span>._activation_fn(z)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.output</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_weights(<span class="va">self</span>, delta: <span class="bu">float</span>, learning_rate: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dJ/dw_i = dJ/dz * dz/dw_i = delta * x_i</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.weights <span class="op">-=</span> learning_rate <span class="op">*</span> delta <span class="op">*</span> <span class="va">self</span>.inputs</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> activate(<span class="va">self</span>, inputs: FloatArray) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.inputs <span class="op">=</span> inputs</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> <span class="bu">float</span>(np.dot(<span class="va">self</span>.weights, inputs)) <span class="op">+</span> <span class="va">self</span>.bias</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.output <span class="op">=</span> <span class="va">self</span>._activation_fn(z)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.output</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_weights(<span class="va">self</span>, delta: <span class="bu">float</span>, learning_rate: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dJ/dw_i = dJ/dz * dz/dw_i = delta * x_i</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.weights <span class="op">-=</span> learning_rate <span class="op">*</span> delta <span class="op">*</span> <span class="va">self</span>.inputs</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="layer-backpropagation" class="level3">
 <h3 class="anchored" data-anchor-id="layer-backpropagation">Layer: Backpropagation</h3>
 <p>Das ist die Umsetzung von <a href="../01-neural-network/theorie.html#backpropagation">Delta und Gradient</a> für einen Layer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backward(<span class="va">self</span>, errors: FloatArray, learning_rate: <span class="bu">float</span>) <span class="op">-&gt;</span> FloatArray:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    previous_errors <span class="op">=</span> np.zeros(<span class="va">self</span>.input_size)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> neuron, error <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.neurons, errors, strict<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dJ/dz = dJ/da * da/dz</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> error <span class="op">*</span> neuron.activate_derivative()</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dz/dx_i = w_i; must use the weights from the forward pass,</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># so this happens before the update below</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        previous_errors <span class="op">+=</span> delta <span class="op">*</span> neuron.weights</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        neuron.update_weights(delta, learning_rate)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        neuron.update_bias(delta, learning_rate)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> previous_errors</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backward(<span class="va">self</span>, errors: FloatArray, learning_rate: <span class="bu">float</span>) <span class="op">-&gt;</span> FloatArray:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    previous_errors <span class="op">=</span> np.zeros(<span class="va">self</span>.input_size)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> neuron, error <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.neurons, errors, strict<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dJ/dz = dJ/da * da/dz</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> error <span class="op">*</span> neuron.activate_derivative()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dz/dx_i = w_i; must use the weights from the forward pass,</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># so this happens before the update below</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        previous_errors <span class="op">+=</span> delta <span class="op">*</span> neuron.weights</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        neuron.update_weights(delta, learning_rate)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        neuron.update_bias(delta, learning_rate)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> previous_errors</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Die C#-Version rechnet mit einfachen Schleifen statt mit numpy, der Ablauf ist derselbe:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">double</span><span class="op">[]</span> <span class="fu">Backward</span> <span class="op">(</span><span class="dt">double</span><span class="op">[]</span> errors<span class="op">,</span> <span class="dt">double</span> learningRate<span class="op">)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span><span class="op">[]</span> previousErrors <span class="op">=</span> <span class="kw">new</span> <span class="dt">double</span><span class="op">[</span>InputSize<span class="op">];</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> n <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> n <span class="op">&lt;</span> Neurons<span class="op">.</span><span class="fu">Length</span><span class="op">;</span> n<span class="op">++)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        Neuron neuron <span class="op">=</span> Neurons<span class="op">[</span>n<span class="op">];</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// dJ/dz = dJ/da * da/dz</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> delta <span class="op">=</span> errors<span class="op">[</span>n<span class="op">]</span> <span class="op">*</span> neuron<span class="op">.</span><span class="fu">ActivateDerivative</span><span class="op">();</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">// dz/dx_i = w_i; must use the weights from the forward pass,</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">// so this happens before the update below</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> InputSize<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            previousErrors<span class="op">[</span>i<span class="op">]</span> <span class="op">+=</span> delta <span class="op">*</span> neuron<span class="op">.</span><span class="fu">Weights</span><span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        neuron<span class="op">.</span><span class="fu">UpdateWeights</span><span class="op">(</span>delta<span class="op">,</span> learningRate<span class="op">);</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        neuron<span class="op">.</span><span class="fu">UpdateBias</span><span class="op">(</span>delta<span class="op">,</span> learningRate<span class="op">);</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> previousErrors<span class="op">;</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="netz-ein-trainingsschritt" class="level3">
 <h3 class="anchored" data-anchor-id="netz-ein-trainingsschritt">Netz: ein Trainingsschritt</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(<span class="va">self</span>, inputs: ArrayLike, targets: ArrayLike) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> np.asarray(targets, dtype<span class="op">=</span>np.float64)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> <span class="va">self</span>.predict(inputs)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dJ/dy_hat for J = 1/2 * (y_hat - y)^2</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    errors <span class="op">=</span> outputs <span class="op">-</span> expected</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">reversed</span>(<span class="va">self</span>.layers):</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        errors <span class="op">=</span> layer.backward(errors, <span class="va">self</span>.learning_rate)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="bu">float</span>(np.<span class="bu">sum</span>((outputs <span class="op">-</span> expected) <span class="op">**</span> <span class="dv">2</span>))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train(<span class="va">self</span>, inputs: ArrayLike, targets: ArrayLike) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> np.asarray(targets, dtype<span class="op">=</span>np.float64)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> <span class="va">self</span>.predict(inputs)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dJ/dy_hat for J = 1/2 * (y_hat - y)^2</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    errors <span class="op">=</span> outputs <span class="op">-</span> expected</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">reversed</span>(<span class="va">self</span>.layers):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        errors <span class="op">=</span> layer.backward(errors, <span class="va">self</span>.learning_rate)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="bu">float</span>(np.<span class="bu">sum</span>((outputs <span class="op">-</span> expected) <span class="op">**</span> <span class="dv">2</span>))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="entscheidungen" class="level2">
@@ -564,13 +679,16 @@ window.Quarto = {
 <li><strong>Neuron-Objekte statt Matrizen</strong> — die Struktur der Angabe ist leichter nachzuvollziehen. Eine Gewichtsmatrix pro Layer wäre deutlich schneller: Ein 7-Segment-Training über 20 000 Epochen dauert in Python rund 18 Sekunden.</li>
 <li><strong>Startgewichte gleichverteilt in <span class="math inline">\([-1, 1)\)</span> mit festem Seed</strong> — Neuronen starten in unterschiedliche Richtungen, und jeder Lauf ist wiederholbar.</li>
 <li><strong>Numerisch stabile Sigmoid-Funktion</strong> — für negative <span class="math inline">\(z\)</span> wird <span class="math inline">\(\frac{e^z}{1 + e^z}\)</span> gerechnet, damit <code>exp</code> nie mit einer großen positiven Zahl aufgerufen wird und überläuft.</li>
-<li><strong>Eine Kommandozeile für alles</strong> — <code>python -m neural_network xor</code>, <code>seven-segment</code> und <code>visualize</code> statt einzelner Skripte.</li>
-<li><strong>C# ohne Zusatzpakete</strong> — single-threaded und mit einfachen Schleifen, damit man jeden Rechenschritt im Debugger verfolgen kann.</li>
+<li><strong>Eine Kommandozeile für alles</strong> — <code>xor</code>, <code>seven-segment</code> und <code>visualize</code> (Python) bzw. <code>selftest</code> und <code>load</code> (C#) statt einzelner Skripte.</li>
+<li><strong>C# ohne Zusatzpakete</strong> — single-threaded und mit einfachen Schleifen, damit man jeden Rechenschritt im Debugger verfolgen kann. Statt eines Test-Frameworks (das ein NuGet-Paket bräuchte) prüft ein eingebauter Selbsttest dieselben Punkte wie die Python-Tests.</li>
+<li><strong>Skalarprodukt als einfache Schleife</strong> — die SIMD-Variante aus dem ersten Entwurf (<code>System.Numerics.Vector</code>) wäre schneller, versteckt aber die Rechnung. Bei höchstens 16 Inputs pro Neuron reicht die Schleife: Das 7-Segment-Training dauert in C# rund eine Sekunde.</li>
+<li><strong>Byte-gleiche Dateien in beiden Sprachen</strong> — C# schreibt Zahlen genau wie Pythons <code>repr</code>; .NET allein würde etwa <code>1E-05</code> statt <code>1e-05</code> schreiben. Ein Dateivergleich zeigt so sofort, ob beide Seiten dasselbe Netz speichern.</li>
+<li><strong>Eigener Zufallsgenerator je Sprache</strong> — C# verwendet <code>System.Random</code>, Python den Generator von numpy. Gleiche Seeds ergeben deshalb andere Startgewichte; den Generator von numpy nachzubauen wäre viel Code ohne Nutzen für das Verständnis.</li>
 </ul>
 </section>
 <section id="fehler-im-ersten-entwurf" class="level2">
 <h2 class="anchored" data-anchor-id="fehler-im-ersten-entwurf">Fehler im ersten Entwurf</h2>
-<p>Unser erster C#-Entwurf hatte die richtige Struktur, aber mehrere Fehler, die das Training verhindert hätten. Sie sind in beiden Versionen behoben:</p>
+<p>Der erste C#-Entwurf hatte die richtige Struktur, aber mehrere Fehler, die das Training verhindert hätten. Sie sind in beiden Versionen behoben:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -616,6 +734,11 @@ window.Quarto = {
 <td><span class="math inline">\([-1, 1)\)</span></td>
 </tr>
 <tr class="odd">
+<td><code>Neuron.cs</code></td>
+<td><code>using NumSharp</code> und <code>using System.Runtime.InteropServices.Swift</code>, beide unbenutzt; NumSharp wäre ein NuGet-Paket</td>
+<td>entfernt</td>
+</tr>
+<tr class="even">
 <td>Python-Gerüst</td>
 <td><code>np.random_uniform</code> gibt es nicht, <code>for i in neuronSize</code> ohne <code>range</code>, Tippfehler <code>active</code> statt <code>activate</code></td>
 <td><code>rng.uniform</code>, <code>range(...)</code>, <code>activate</code> mit Rückgabewert</td>
@@ -625,58 +748,88 @@ window.Quarto = {
 </section>
 <section id="tests" class="level2">
 <h2 class="anchored" data-anchor-id="tests">Tests</h2>
-<p>Die Python-Version hat 21 automatische Tests (<code>pytest</code>):</p>
+<p>Die Python-Version hat 27 automatische Tests (<code>pytest</code>), die C#-Version einen eingebauten Selbsttest mit 17 Prüfungen (<code>dotnet run -- selftest</code>):</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Test</th>
 <th>Prüft</th>
+<th style="text-align: center;">Python</th>
+<th style="text-align: center;">C#</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Gradienten-Check</td>
 <td>Backpropagation gegen numerische Ableitung, drei Netzgrößen</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr class="even">
 <td>Forward-Pass</td>
 <td>Ergebnis gegen eine von Hand nachgerechnete Formel</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr class="odd">
 <td>Konvergenz</td>
 <td>XOR lernt alle 4 Fälle, der 7-Segment-Decoder alle 10 Ziffern</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr class="even">
 <td>Export/Import</td>
 <td>JSON und TXT neu laden ergibt bitgleiche Vorhersagen; C-Header enthält jeden Wert</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr class="odd">
 <td>Fehlerfälle</td>
 <td>falsche Layer-Größen, falsche Input-Länge, kaputte Dateien werden abgelehnt</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="even">
+<td>Zahlenformat</td>
+<td>jede Zahl wird wie Pythons <code>repr</code> geschrieben und exakt zurückgelesen</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="odd">
+<td>Austausch</td>
+<td>Modelle der anderen Sprache laden und sagen richtig vorher; die daraus geschriebenen Dateien sind byte-gleich</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr class="even">
 <td>Visualisierung</td>
 <td>die erzeugte Seite enthält gültige Daten für alle Szenarien</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="selbst-ausprobieren" class="level2">
 <h2 class="anchored" data-anchor-id="selbst-ausprobieren">Selbst ausprobieren</h2>
-<p>Im Ordner <code>python/</code> des Repos:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv <span class="op">.</span><span class="fu">venv</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m pip install <span class="op">-</span>r requirements<span class="op">.</span><span class="fu">txt</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m neural_network xor</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m neural_network seven-segment <span class="op">--</span>export <span class="op">..</span>\models\python</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m neural_network visualize</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m pytest</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout-note" title="C#">
-<p>Die C#-Version ist in Arbeit. Sie bekommt dieselben Befehle (<code>dotnet run -- xor</code>, <code>seven-segment</code>, <code>selftest</code>) und lädt die in Python trainierten Netze.</p>
-</div>
+<p>Python im Ordner <code>python/</code> des Repos:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv <span class="op">.</span><span class="fu">venv</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m pip install <span class="op">-</span>r requirements<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m neural_network xor</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m neural_network seven-segment <span class="op">--</span>export <span class="op">..</span>\models\python</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m neural_network visualize</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">venv</span>\Scripts\python <span class="op">-</span>m pytest</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>C# im Ordner <code>csharp/</code> (benötigt das .NET 10 SDK, keine weiteren Pakete):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dotnet run <span class="op">--</span> xor</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dotnet run <span class="op">--</span> seven-segment <span class="op">--</span>export <span class="op">..</span>\models\csharp</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>dotnet run <span class="op">--</span> load <span class="op">..</span>\models\python\xor<span class="op">.</span><span class="fu">json</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>dotnet run <span class="op">--</span> selftest</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Theorie – INSY · 5AHITS</title>
+<title>Theorie – INSY</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -283,7 +283,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">INSY · 5AHITS</span>
+    <span class="navbar-title">INSY</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Suchen"></div>
@@ -362,6 +362,24 @@ window.Quarto = {
  <span class="menu-text">Ergebnisse</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/training-visualisierung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualisierung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/tensorflow-vergleich.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Vergleich mit TensorFlow</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-neural-network/c-inferenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inferenz in C</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -383,7 +401,7 @@ window.Quarto = {
   <li><a href="#gradienten" id="toc-gradienten" class="nav-link" data-scroll-target="#gradienten">Gradienten</a></li>
   <li><a href="#update" id="toc-update" class="nav-link" data-scroll-target="#update">Update</a></li>
   </ul></li>
-  <li><a href="#wie-wir-die-herleitung-prüfen" id="toc-wie-wir-die-herleitung-prüfen" class="nav-link" data-scroll-target="#wie-wir-die-herleitung-prüfen">Wie wir die Herleitung prüfen</a></li>
+  <li><a href="#prüfung-der-herleitung" id="toc-prüfung-der-herleitung" class="nav-link" data-scroll-target="#prüfung-der-herleitung">Prüfung der Herleitung</a></li>
   <li><a href="#lokale-minima" id="toc-lokale-minima" class="nav-link" data-scroll-target="#lokale-minima">Lokale Minima</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Andere Formate</h2><ul><li><a href="theorie.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
@@ -453,7 +471,7 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(\alpha\)</span></td>
-<td>Lernrate, bei uns 0,1</td>
+<td>Lernrate, hier 0,1</td>
 </tr>
 </tbody>
 </table>
@@ -535,13 +553,14 @@ b^{[l]}_{\text{neu}} = b^{[l]}_{\text{alt}} - \alpha \, \frac{\partial J}{\parti
 </div>
 </section>
 </section>
-<section id="wie-wir-die-herleitung-prüfen" class="level2">
-<h2 class="anchored" data-anchor-id="wie-wir-die-herleitung-prüfen">Wie wir die Herleitung prüfen</h2>
+<section id="prüfung-der-herleitung" class="level2">
+<h2 class="anchored" data-anchor-id="prüfung-der-herleitung">Prüfung der Herleitung</h2>
 <p>Eine falsche Ableitung fällt beim Training oft gar nicht auf — das Netz lernt dann eben schlechter. Deshalb vergleicht ein Test die Backpropagation mit einer <strong>numerischen Ableitung</strong>: Jedes Gewicht wird um <span class="math inline">\(\varepsilon = 10^{-6}\)</span> nach oben und unten verschoben und die Kosten werden neu berechnet.</p>
 <p><span class="math display">\[
 \frac{\partial J}{\partial w} \approx \frac{J(w + \varepsilon) - J(w - \varepsilon)}{2 \varepsilon}
 \]</span></p>
 <p>Für drei verschiedene Netzgrößen (2-2-1, 4-16-7 und 3-5-4-2 mit zwei Hidden-Layern) stimmen beide Werte auf mindestens <span class="math inline">\(10^{-8}\)</span> überein.</p>
+<p>Eine zweite, unabhängige Prüfung liefert der <a href="../01-neural-network/tensorflow-vergleich.html">Vergleich mit TensorFlow</a>: TensorFlow bildet die Ableitungen automatisch und folgt mit denselben Startgewichten über alle 20 000 Epochen demselben Verlauf wie die eigene Implementierung.</p>
 </section>
 <section id="lokale-minima" class="level2">
 <h2 class="anchored" data-anchor-id="lokale-minima">Lokale Minima</h2>

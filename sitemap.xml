@@ -2,26 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/index.html</loc>
-    <lastmod>2026-10-18T13:35:00.558Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/index.html</loc>
-    <lastmod>2026-10-18T13:35:00.599Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/ergebnisse.html</loc>
-    <lastmod>2026-10-18T13:35:00.581Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/dateiformate.html</loc>
-    <lastmod>2026-10-18T13:35:00.570Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/implementierung.html</loc>
-    <lastmod>2026-10-18T13:35:00.596Z</lastmod>
+    <lastmod>2026-10-18T13:35:42.125Z</lastmod>
   </url>
   <url>
     <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/theorie.html</loc>
-    <lastmod>2026-10-18T13:35:00.614Z</lastmod>
+    <lastmod>2026-10-18T13:35:42.141Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/index.html</loc>
+    <lastmod>2026-10-18T13:35:42.141Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/ergebnisse.html</loc>
+    <lastmod>2026-10-18T13:35:42.135Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/c-inferenz.html</loc>
+    <lastmod>2026-10-18T13:35:42.125Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/dateiformate.html</loc>
+    <lastmod>2026-10-18T13:35:42.125Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/implementierung.html</loc>
+    <lastmod>2026-10-18T13:35:42.135Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/tensorflow-vergleich.html</loc>
+    <lastmod>2026-10-18T13:35:42.141Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jonas-wolfbauer.github.io/5AHITS_2026_2027_INSY/01-neural-network/training-visualisierung.html</loc>
+    <lastmod>2026-10-18T13:35:42.141Z</lastmod>
   </url>
 </urlset>
