@@ -12,5 +12,6 @@ INSY team repo: one folder per assignment (`NN-topic/`), each with its own `CLAU
 
 - Write only inside this working directory and the Obsidian vaults (via connector). No scratchpad, no NuGet packages (restore writes to the user profile), `pip --no-cache-dir`. Temporary files go to `.tmp/` and are removed afterwards.
 - `site/` is a generated copy of the vault's `INSY/` folder — never edit it.
+- `.tools/` holds portable toolchains (w64devkit GCC, Python 3.12 for TensorFlow), not versioned. New downloads only with the team's OK, from releases at least two weeks old, checked against their SHA-256.
 - Commits only after the team's OK; the team pushes.
 - Team project: several people write through the same account. Note who said what ("per Samuel", "per Jonas"); ask if unclear.

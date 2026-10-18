@@ -4,6 +4,11 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .ruff_cache/
+# Keras settings file, kept in the project by tf_comparison
+.keras/
+
+# C build output
+build/
 
 # .NET
 bin/
@@ -15,6 +20,8 @@ TestResults/
 # generated, python/neural_network/visualization/ is source code
 /*/visualization/
 .tmp/
+# Portable toolchains (GCC, Python for TensorFlow), downloaded locally
+/.tools/
 # Quarto build copy of the website; the source lives in the Obsidian vault
 /site/
 

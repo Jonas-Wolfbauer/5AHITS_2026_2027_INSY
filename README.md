@@ -6,7 +6,7 @@ Assignments for INSY (Informationssysteme), worked on in changing teams. Each as
 
 | Folder | Assignment |
 |---|---|
-| [`01-neural-network/`](01-neural-network/) | Neural network from scratch in Python and C# (XOR, 7-segment decoder) |
+| [`01-neural-network/`](01-neural-network/) | Neural network from scratch in Python and C# (XOR, 7-segment decoder), comparison with TensorFlow, inference in C |
 
 ## Website
 
