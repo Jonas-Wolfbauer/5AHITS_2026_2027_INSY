@@ -1,0 +1,21 @@
+[tool.ruff]
+line-length = 88
+# TensorFlow has no packages for newer Python versions yet
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "D"]
+
+[tool.ruff.lint.isort]
+# The own implementation is imported from ../python
+known-first-party = ["neural_network", "tf_comparison"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "../python"]
+testpaths = ["tests"]

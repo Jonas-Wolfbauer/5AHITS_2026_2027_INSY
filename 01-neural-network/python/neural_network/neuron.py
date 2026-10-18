@@ -1,5 +1,8 @@
 """A single neuron with weights, bias and an activation function."""
 
+# Python 3.12 (used by the TensorFlow comparison) needs this for "-> Neuron"
+from __future__ import annotations
+
 import numpy as np
 
 from neural_network._typing import FloatArray

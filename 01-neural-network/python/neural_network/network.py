@@ -1,5 +1,8 @@
 """Feedforward neural network built from layers."""
 
+# Python 3.12 (used by the TensorFlow comparison) needs this for "-> NeuralNetwork"
+from __future__ import annotations
+
 from collections.abc import Callable, Sequence
 from itertools import pairwise
 from pathlib import Path
